@@ -1,0 +1,8 @@
+version: '3'
+services:
+  some-postgres:
+    image: postgres_v2
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=testing1234

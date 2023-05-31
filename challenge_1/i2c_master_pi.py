@@ -1,7 +1,10 @@
-from smbus import SMBus
+import smbus2
+import time
 
 addr = 0x8 
-bus = SMBus(1)
+bus = smbus2.SMBus(1)
+
+time.sleep(1)
 
 numb = 1
 
@@ -12,7 +15,7 @@ while numb == 1:
 
 	if ledstate == "1":
 		bus.write_byte(addr, 0x1) # switch it on
-	elif ledstate = "0":
+	elif ledstate == "0":
 		bus.write_byte(addr,0x0) # switch it off
 	else:
 		numb = 0
