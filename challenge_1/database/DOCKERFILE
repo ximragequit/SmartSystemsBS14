@@ -1,2 +1,0 @@
-FROM postgres
-COPY databese.sql /docker-entrypoint-initdb.d/database.sql
