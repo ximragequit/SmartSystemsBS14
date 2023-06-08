@@ -12,7 +12,6 @@ CREATE TABLE sensor (
     PRIMARY KEY (sensor_id)
 );
 
-
 CREATE TABLE reading (
     reading_id SMALLINT NOT NULL,
     sensor_id SMALLINT,
@@ -22,21 +21,17 @@ CREATE TABLE reading (
     PRIMARY KEY (reading_id)
 );
 
-
-CREATE TABLE fan_stats (
-    fan_stat_id SMALLINT NOT NULL,
-    fan_description VARCHAR(50),
-    fan_location VARCHAR(50),
-    fan_status FLOAT,
-    zeit TIME,
-    PRIMARY KEY (fan_stat_id)
+CREATE TABLE vent (
+    vent_id SMALLINT NOT NULL,
+    vent_description VARCHAR(50),
+    vent_location VARCHAR(50),
+    PRIMARY KEY (vent_id)
 );
-
 
 CREATE TABLE vent_stats (
     vent_stat_id SMALLINT NOT NULL,
-    vent_description VARCHAR(50),
-    vent_location VARCHAR(50),
+    vent_id SMALLINT,
+    FOREIGN KEY (vent_id) REFERENCES vent(vent_id),
     vent_status FLOAT,
     zeit TIME,
     PRIMARY KEY (vent_stat_id)
@@ -45,10 +40,9 @@ CREATE TABLE vent_stats (
 
 CREATE TABLE events (
     event_id SMALLINT NOT NULL,
+    zeit TIME,
     reading_id SMALLINT,
     FOREIGN KEY (reading_id) REFERENCES reading(reading_id),
-    fan_stat_id SMALLINT,
-    FOREIGN KEY (fan_stat_id) REFERENCES fan_stats(fan_stat_id),
     vent_stat_id SMALLINT,
     FOREIGN KEY (vent_stat_id) REFERENCES vent_stats(vent_stat_id),
     trigger_temperature FLOAT,
@@ -56,19 +50,21 @@ CREATE TABLE events (
 );
 
 
-CREATE TABLE logging (
-    log_id SMALLINT NOT NULL,
-    event_id SMALLINT,
-    FOREIGN KEY (event_id) REFERENCES events(event_id),
-    temperature FLOAT,
-    zeit TIME,
-    PRIMARY KEY (log_id)
-);
-
+-- CREATE TABLE logging (
+--     log_id SMALLINT NOT NULL,
+--     event_id SMALLINT,
+--     FOREIGN KEY (event_id) REFERENCES events(event_id),
+--     temperature FLOAT,
+--     zeit TIME,
+--     PRIMARY KEY (log_id)
+-- );
 
 
 -- Fill in data
 
-INSERT INTO sensor VALUES 
+INSERT INTO sensor VALUES
 (1,'Temperatur Sensor','main'),
 (2,'Zusatz Temperatur Sensor', 'back');
+
+INSERT INTO vent VALUES
+(1,'Ventilator','main');
