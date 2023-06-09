@@ -19,12 +19,12 @@ duration = 300
 start_time = time.time()
 event = False
 
-global reading_id
-reading_id = 1
-global vent_stat_id
-vent_stat_id = 1
-global event_id
-event_id = 1
+global reading_ID
+reading_ID = 1
+global vent_stat_ID
+vent_stat_ID = 1
+global event_ID
+event_ID = 1
 
 
 temp_5 = 26.00
@@ -55,7 +55,6 @@ def vent_control(speed):
         vent = speed
         # ignore the str(int(str.. because this shit idk
         ser_vent.write(str(int(str(vent))).encode()) # Wanted voltage for right speed
-        print(vent)
         time.sleep(1.5)
 
 try:
@@ -82,7 +81,7 @@ try:
         ]
 
         # Iterate over the temperature thresholds in reverse order
-        for threshold, level, speed in reversed(temperature_thresholds):
+        for threshold, level, speed in temperature_thresholds:
             if not temp:
                 continue  # Skip the current iteration if there is no value in temp
             if float(temp) >= threshold:
@@ -90,13 +89,13 @@ try:
                 activate_leds(level)
                 vent_control(speed)
                 break  # Exit the loop after the first match
-        else:
-            if not temp:
-                print("No temperature value")
             else:
-                print("Kühl genug")
-            activate_leds(0)
-            vent_control(0)
+                if not temp:
+                        print("No temperature value")
+                else:
+                        print("Kühl genug")
+                activate_leds(0)
+                vent_control(0)
 
         # SQL Insertion for Temp
         if temp != temp_saved:
@@ -121,7 +120,7 @@ try:
                 cursor.execute(insert_query, data_to_insert)
                 connection.commit()
                 cursor.close()
-                print("Data inserted into the table!") 
+                print('Temperature', temp, 'inserted into the table!') 
  
                 # This was indeed an event (adding event afterwards)
                 event = True
@@ -149,9 +148,7 @@ try:
                 cursor.execute(insert_query, data_to_insert)
                 connection.commit()
                 cursor.close()
-                print("Data inserted into the table!")
-
-                print("vent_stat_ID after query:", vent_stat_ID)
+                print('Ventilation', vent, 'inserted into the table!')
 
                 # This was indeed an event (adding event afterwards)
                 event = True
@@ -178,7 +175,7 @@ try:
                 cursor.execute(insert_query, data_to_insert)
                 connection.commit()
                 cursor.close()
-                print("Data inserted into the table!")
+                print("Event inserted into the table!\n-----------------------------")
 
                 # need to check again next time
                 event = False
