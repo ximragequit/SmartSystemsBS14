@@ -182,3 +182,6 @@ Traceback (most recent call last):
   File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 176, in <module>
     data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
 NameError: name 'vent_stat_ID' is not defined
+2023-06-09 13:03:16,604 - ERROR - PostgreSQL database error: insert or update on table "events" violates foreign key constraint "events_vent_stat_id_fkey"
+DETAIL:  Key (vent_stat_id)=(1) is not present in table "vent_stats".
+
