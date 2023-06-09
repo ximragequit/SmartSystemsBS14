@@ -17,7 +17,7 @@ CREATE TABLE reading (
     sensor_id SMALLINT,
     FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id),
     temperature FLOAT,
-    zeit TIME,
+    zeit VARCHAR(10),
     PRIMARY KEY (reading_id)
 );
 
@@ -33,14 +33,14 @@ CREATE TABLE vent_stats (
     vent_id SMALLINT,
     FOREIGN KEY (vent_id) REFERENCES vent(vent_id),
     vent_status FLOAT,
-    zeit TIME,
+    zeit VARCHAR(10),
     PRIMARY KEY (vent_stat_id)
 );
 
 
 CREATE TABLE events (
     event_id SMALLINT NOT NULL,
-    zeit TIME,
+    zeit VARCHAR(10),
     reading_id SMALLINT,
     FOREIGN KEY (reading_id) REFERENCES reading(reading_id),
     vent_stat_id SMALLINT,

@@ -2,7 +2,6 @@ import serial
 import time
 import psycopg2
 import logging
-from datetime import datetime
 
 # Configure logging
 logging.basicConfig(filename='script.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -18,11 +17,6 @@ vent = 0
 duration = 300
 start_time = time.time()
 event = False
-
-reading_id = 0
-vent_stat_id = 0
-event_id = 0
-
 
 temp_5 = 26.00
 temp_4 = 25.80
@@ -101,25 +95,19 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(reading_id) FROM reading"
                 cursor.execute(select_query)
-                reading_ID_row = cursor.fetchone()
-                if reading_ID_row[0] is not None:
-                        reading_ID = reading_ID_row[0] + 1
-                else:
-                        reading_ID = 1
+		reading_ID_row = corsor.fetchone()
+		reading_ID = (int(reading_ID_wor[0]) + 1) if not None else 0
                 cursor.close()
-
-                # getting time
-                current_time = datetime.now().strftime("%H:%M:%S")
 
                 # adding new data
                 cursor = connection.cursor()
-                data_to_insert = (int(reading_ID), int(1), float(temp), str(current_time))
+                data_to_insert = (reading_ID,'1',temp,time)
                 insert_query = f"INSERT INTO reading VALUES (%s, %s, %s, %s)"
-                cursor.execute(insert_query, data_to_insert)
+                cursor.execute(insert_query, (data_to_insert,))
                 connection.commit()
                 cursor.close()
                 print("Data inserted into the table!") 
- 
+
                 # This was indeed an event (adding event afterwards)
                 event = True
 
@@ -129,21 +117,15 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(vent_stat_id) FROM vent_stats"
                 cursor.execute(select_query)
-                vent_stat_ID_row = cursor.fetchone()
-                if vent_stat_ID_row[0] is not None:
-                        vent_stat_ID = vent_stat_ID_row[0] + 1
-                else:
-                        vent_stat_ID = 1
-                cursor.close()
 
-                # getting time
-                current_time = datetime.now().strftime("%H:%M:%S")
+                vent_stat_ID = ((int(cursor.fetchone()[0])) + 1)
+                cursor.close()
 
                 # adding new data
                 cursor = connection.cursor()
-                data_to_insert = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
+                data_to_insert = (vent_stat_ID,'1',vent,time)
                 insert_query = f"INSERT INTO vent_stats VALUES (%s, %s, %s, %s)"
-                cursor.execute(insert_query, data_to_insert)
+                cursor.execute(insert_query, (data_to_insert,))
                 connection.commit()
                 cursor.close()
                 print("Data inserted into the table!")
@@ -156,21 +138,14 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(event_id) FROM events"
                 cursor.execute(select_query)
-                event_ID_row = cursor.fetchone()
-                if event_ID_row[0] is not None:
-                        event_ID = event_ID_row[0] + 1
-                else:
-                        event_ID = 1
-                cursor.close()
-
-                # getting time
-                current_time = datetime.now().strftime("%H:%M:%S")
+                event_ID = ((int(cursor.fetchone()[0])) + 1)
+                cursor.close()   
 
                 # adding new data
                 cursor = connection.cursor()
-                data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+                data_to_insert = (event_ID,time,reading_ID,vent_stat_ID,temp)
                 insert_query = f"INSERT INTO events VALUES (%s, %s, %s, %s, %s)"
-                cursor.execute(insert_query, data_to_insert)
+                cursor.execute(insert_query, (data_to_insert,))
                 connection.commit()
                 cursor.close()
                 print("Data inserted into the table!")

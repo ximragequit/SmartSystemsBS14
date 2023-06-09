@@ -12,3 +12,133 @@ Traceback (most recent call last):
   File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 98, in <module>
     reading_ID = ((int(cursor.fetchone())[0]) + 1)
 TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+2023-06-09 08:53:46,250 - ERROR - An unexpected error occurred: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 98, in <module>
+    reading_ID = ((int(cursor.fetchone()[0])) + 1)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2023-06-09 09:03:00,240 - ERROR - An unexpected error occurred: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 99, in <module>
+    reading_ID = (int(reading_ID_row[0]) + 1) if reading_ID_row is not None else 0
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2023-06-09 09:11:36,308 - ERROR - PostgreSQL database error: can't adapt type 'module'
+2023-06-09 09:25:48,976 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 110, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:29:00,910 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 110, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:30:09,715 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 110, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:36:08,574 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 112, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:37:47,664 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 112, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:44:39,655 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 112, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:55:50,415 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:58:00,439 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 09:59:26,522 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:01:00,171 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:06:00,775 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:09:49,808 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:12:36,925 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:14:09,286 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 118, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:18:24,062 - ERROR - An unexpected error occurred: name 'floard' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 117, in <module>
+    print(int(reading_ID), int(1), floard(temp), current_time)
+NameError: name 'floard' is not defined
+2023-06-09 10:19:02,608 - ERROR - An unexpected error occurred: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 65, in <module>
+    temp = ser_temp.readline().decode('utf-8').strip()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2023-06-09 10:20:22,545 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 120, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:24:49,269 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 120, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 10:26:54,220 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 120, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 11:24:20,638 - ERROR - An unexpected error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 120, in <module>
+    cursor.execute(insert_query, (data_to_insert,))
+IndexError: tuple index out of range
+2023-06-09 12:01:09,536 - ERROR - An unexpected error occurred: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 167, in <module>
+    event_ID = (int(event_ID_row[0]) + 1) if event_ID_row else 1
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2023-06-09 12:23:31,218 - ERROR - PostgreSQL database error: could not connect to server: Connection refused
+	Is the server running on host "192.168.4.84" and accepting
+	TCP/IP connections on port 5432?
+
+2023-06-09 12:25:43,735 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 166, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:27:21,985 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 171, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
