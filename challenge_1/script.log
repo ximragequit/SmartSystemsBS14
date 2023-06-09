@@ -1,0 +1,14 @@
+2023-06-09 08:46:50,130 - ERROR - PostgreSQL database error: could not connect to server: No route to host
+	Is the server running on host "192.168.4.181" and accepting
+	TCP/IP connections on port 5432?
+
+2023-06-09 08:48:02,174 - ERROR - An unexpected error occurred: unsupported operand type(s) for +: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 98, in <module>
+    reading_ID = ((cursor.fetchone())[0] + 1)
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+2023-06-09 08:51:32,337 - ERROR - An unexpected error occurred: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 98, in <module>
+    reading_ID = ((int(cursor.fetchone())[0]) + 1)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'

@@ -1,9 +1,0 @@
-import serial
-
-ser_0 = serial.Serial('/dev/ttyACM0', 9600)  # Port anpassen, falls erforderlich
-ser_1 = serial.Serial('/dev/ttyACM1', 9600)
-
-while True:
-    line = ser_0.readline().decode('utf-8').strip()
-    if line:
-        print

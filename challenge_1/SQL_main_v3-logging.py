@@ -52,7 +52,7 @@ def vent_control(speed):
 try:
     # connect to Database
     connection = psycopg2.connect(
-    host='192.168.4.181',
+    host='192.168.4.84',
     database='postgres',
     user='postgres',
     password='testing1234'
@@ -95,7 +95,7 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(reading_id) FROM reading"
                 cursor.execute(select_query)
-                reading_ID = ((cursor.fetchone())[0] + 1)
+                reading_ID = ((int(cursor.fetchone())[0]) + 1)
                 cursor.close()
 
                 # adding new data
@@ -116,7 +116,7 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(vent_stat_id) FROM vent_stats"
                 cursor.execute(select_query)
-                vent_stat_ID = ((cursor.fetchone())[0] + 1)
+                vent_stat_ID = ((int(cursor.fetchone())[0]) + 1)
                 cursor.close()
 
                 # adding new data
@@ -136,7 +136,7 @@ try:
                 cursor = connection.cursor()
                 select_query = f"SELECT MAX(event_id) FROM events"
                 cursor.execute(select_query)
-                event_ID = ((cursor.fetchone())[0] + 1)
+                event_ID = ((int(cursor.fetchone())[0]) + 1)
                 cursor.close()   
 
                 # adding new data
