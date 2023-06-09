@@ -19,9 +19,12 @@ duration = 300
 start_time = time.time()
 event = False
 
-reading_id = 0
-vent_stat_id = 0
-event_id = 0
+global reading_id
+reading_id = 1
+global vent_stat_id
+vent_stat_id = 1
+global event_id
+event_id = 1
 
 
 temp_5 = 26.00
@@ -147,6 +150,8 @@ try:
                 connection.commit()
                 cursor.close()
                 print("Data inserted into the table!")
+
+                print("vent_stat_ID after query:", vent_stat_ID)
 
                 # This was indeed an event (adding event afterwards)
                 event = True

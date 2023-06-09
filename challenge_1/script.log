@@ -142,3 +142,43 @@ Traceback (most recent call last):
   File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 171, in <module>
     data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
 NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:34:55,948 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 173, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:35:35,987 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 173, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:37:32,765 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 173, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:38:49,588 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 173, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:39:42,472 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 173, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:42:11,736 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 176, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:43:27,320 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 176, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
+2023-06-09 12:45:17,357 - ERROR - An unexpected error occurred: name 'vent_stat_ID' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_1/SQL_main_v3-logging.py", line 176, in <module>
+    data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+NameError: name 'vent_stat_ID' is not defined
