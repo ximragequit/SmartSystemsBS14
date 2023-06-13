@@ -30,6 +30,7 @@ start_time = time.time()
 event = False
 
 manual_mode = False
+level_value = 0
 
 global reading_ID
 reading_ID = 1
@@ -38,12 +39,12 @@ vent_stat_ID = 1
 global event_ID
 event_ID = 1
 
-temp_5 = 26.00
-temp_4 = 25.80
-temp_3 = 25.60
-temp_2 = 25.40
-temp_1 = 25.20
-temp_wanted = 25.00
+temp_5 = 25.00
+temp_4 = 24.80
+temp_3 = 24.60
+temp_2 = 24.40
+temp_1 = 24.20
+temp_wanted = 24.00
 
 v_speed_5 = 255
 v_speed_4 = 210
@@ -71,13 +72,33 @@ def vent_control(speed):
 def on_connect(client, userdata, flags, rc):
 	print("Connected to MQTT broker: " + mqtt_broker)
 	client.subscribe(mqtt_setting)
+	client.subscribe(mqtt_level)
 
 # Callback function for the on_message event
 def on_message(client, userdata, msg):
+	global manual_mode, level_value, vent
 	print("Received message: " + str(msg.payload.decode()))
-	if bool(msg.payload.decode()) != manual_mode:
-		manual_mode = bool(msg.payload.decode())
-		print("Manual Mode active" if manual_mode else "Automatic Mode active")
+	if msg.topic == mqtt_setting:
+		if (str(msg.payload.decode())) == 'True':
+			manual_mode = True
+			print("Manual Mode active")
+		elif (str(msg.payload.decode())) == 'False':
+			manual_mode = False
+			print("Automatic Mode active")
+		else:
+			print(manual_mode)
+	elif msg.topic == mqtt_level:
+		level_value = int(msg.payload.decode())
+		vent_mapping = {
+    		0: 0,
+    		1: v_speed_1,
+    		2: v_speed_2,
+    		3: v_speed_3,
+		    4: v_speed_4,
+    		5: v_speed_5
+		}
+		vent = vent_mapping.get(level_value)
+		print("Recieved Level Value:", level_value)
 
 # Function to start the MQTT client
 def start_mqtt_client():
@@ -94,7 +115,6 @@ def publish_message(topic, message):
 	client.username_pw_set(mqtt_usr, mqtt_passw)
 	client.connect(mqtt_broker, mqtt_port, 60)
 	client.publish(topic, message)
-	print("Published: ", topic, message)
 	client.disconnect()
 
 try:
@@ -116,11 +136,15 @@ try:
 
 		message_temp = str(temp)
 		publish_message(mqtt_temp, message_temp)
-		print(mqtt_temp, message_temp)
+		manual_mode
 
-		if manual_mode:
-			print("here")
-		else:
+		if manual_mode == True:
+			print(level_value)
+			print(f"Kühlung Stufe {level_value}")
+			vent_control(vent)
+			activate_leds(level_value)
+
+		elif manual_mode == False:
 			temperature_thresholds = [
 				(temp_5, 5, v_speed_5),
 				(temp_4, 4, v_speed_4),
@@ -144,95 +168,103 @@ try:
 						print("No temperature value")
 					else:
 						print("Kühl genug")
-				activate_leds(0)
-				vent_control(0)
+						break
+					activate_leds(0)
+					vent_control(0)
 
-			# SQL Insertion for Temp
-			if temp != temp_saved:
-				# getting highest ID
-				cursor = connection.cursor()
-				select_query = f"SELECT MAX(reading_id) FROM reading"
-				cursor.execute(select_query)
-				reading_ID_row = cursor.fetchone()
-				if reading_ID_row[0] is not None:
-					reading_ID = reading_ID_row[0] + 1
-				else:
-					reading_ID = 1
-				cursor.close()
+		else:
+			print("ERROR\nManual Mode holds:", manual_mode)
 
-				# getting time
-				current_time = datetime.now().strftime("%H:%M:%S")
+		# SQL Insertion for Temp
+		if temp != temp_saved:
+			# getting highest ID
+			cursor = connection.cursor()
+			select_query = f"SELECT MAX(reading_id) FROM reading"
+			cursor.execute(select_query)
+			reading_ID_row = cursor.fetchone()
+			if reading_ID_row[0] is not None:
+				reading_ID = reading_ID_row[0] + 1
+			else:
+				reading_ID = 1
+			cursor.close()
 
-				# adding new data
-				cursor = connection.cursor()
-				data_to_insert = (int(reading_ID), int(1), float(temp), str(current_time))
-				insert_query = f"INSERT INTO reading VALUES (%s, %s, %s, %s)"
-				cursor.execute(insert_query, data_to_insert)
-				connection.commit()
-				cursor.close()
-				print('Temperature', temp, 'inserted into the table!')
+			# getting time
+			current_time = datetime.now().strftime("%H:%M:%S")
 
-				# This was indeed an event (adding event afterwards)
-				event = True
+			# adding new data
+			cursor = connection.cursor()
+			data_to_insert = (int(reading_ID), int(1), float(temp), str(current_time))
+			insert_query = f"INSERT INTO reading VALUES (%s, %s, %s, %s)"
+			cursor.execute(insert_query, data_to_insert)
+			connection.commit()
+			cursor.close()
+			print('Temperature', temp, 'inserted into the table!')
 
-			# SQL Insertion for Ventilation
-			if vent != vent_saved:
-				# getting highest ID
-				cursor = connection.cursor()
-				select_query = f"SELECT MAX(vent_stat_id) FROM vent_stats"
-				cursor.execute(select_query)
-				vent_stat_ID_row = cursor.fetchone()
-				if vent_stat_ID_row[0] is not None:
-					vent_stat_ID = vent_stat_ID_row[0] + 1
-				else:
-					vent_stat_ID = 1
-				cursor.close()
+			# This was indeed an event (adding event afterwards)
+			event = True
+   
+			temp_saved = temp
 
-				# getting time
-				current_time = datetime.now().strftime("%H:%M:%S")
+		# SQL Insertion for Ventilation
+		if vent != vent_saved:
+			# getting highest ID
+			cursor = connection.cursor()
+			select_query = f"SELECT MAX(vent_stat_id) FROM vent_stats"
+			cursor.execute(select_query)
+			vent_stat_ID_row = cursor.fetchone()
+			if vent_stat_ID_row[0] is not None:
+				vent_stat_ID = vent_stat_ID_row[0] + 1
+			else:
+				vent_stat_ID = 1
+			cursor.close()
 
-				# adding new data
-				cursor = connection.cursor()
-				data_to_insert = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
-				insert_query = f"INSERT INTO vent_stats VALUES (%s, %s, %s, %s)"
-				cursor.execute(insert_query, data_to_insert)
-				connection.commit()
-				cursor.close()
-				print('Ventilation', vent, 'inserted into the table!')
+			# getting time
+			current_time = datetime.now().strftime("%H:%M:%S")
 
-				# This was indeed an event (adding event afterwards)
-				event = True
+			# adding new data
+			cursor = connection.cursor()
+			data_to_insert = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
+			insert_query = f"INSERT INTO vent_stats VALUES (%s, %s, %s, %s)"
+			cursor.execute(insert_query, data_to_insert)
+			connection.commit()
+			cursor.close()
+			print('Ventilation', vent, 'inserted into the table!')
 
-			if event:
-				# getting highest ID
-				cursor = connection.cursor()
-				select_query = f"SELECT MAX(event_id) FROM events"
-				cursor.execute(select_query)
-				event_ID_row = cursor.fetchone()
-				if event_ID_row[0] is not None:
-					event_ID = event_ID_row[0] + 1
-				else:
-					event_ID = 1
-				cursor.close()
+			# This was indeed an event (adding event afterwards)
+			event = True
+   
+			vent_saved = vent
 
-				# getting time
-				current_time = datetime.now().strftime("%H:%M:%S")
+		if event:
+			# getting highest ID
+			cursor = connection.cursor()
+			select_query = f"SELECT MAX(event_id) FROM events"
+			cursor.execute(select_query)
+			event_ID_row = cursor.fetchone()
+			if event_ID_row[0] is not None:
+				event_ID = event_ID_row[0] + 1
+			else:
+				event_ID = 1
+			cursor.close()
 
-				# adding new data
-				cursor = connection.cursor()
-				data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
-				insert_query = f"INSERT INTO events VALUES (%s, %s, %s, %s, %s)"
-				cursor.execute(insert_query, data_to_insert)
-				connection.commit()
-				cursor.close()
-				print("Event inserted into the table!\n-----------------------------")
+			# getting time
+			current_time = datetime.now().strftime("%H:%M:%S")
 
-				# need to check again next time
-				event = False
+			# adding new data
+			cursor = connection.cursor()
+			data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+			insert_query = f"INSERT INTO events VALUES (%s, %s, %s, %s, %s)"
+			cursor.execute(insert_query, data_to_insert)
+			connection.commit()
+			cursor.close()
+			print("Event inserted into the table!\n-----------------------------")
 
-			if time.time() - start_time >= duration:
-				print("That was long enough")
-				break
+			# need to check again next time
+			event = False
+
+		if time.time() - start_time >= duration:
+			print("That was long enough")
+			break
 
 except serial.SerialException as se:
 	logging.error(f"Serial communication error: {se}")
