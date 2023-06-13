@@ -35,3 +35,30 @@ Traceback (most recent call last):
   File "/Workshop/challenge_2/main1.py", line 115, in <module>
     client.publish_massage = publish_message(mqtt_temp, message_temp)
 NameError: name 'client' is not defined
+2023-06-13 17:40:13,744 - ERROR - An unexpected error occurred: name 'manual_vent' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main_copy.py", line 143, in <module>
+    vent_control(manual_vent)
+NameError: name 'manual_vent' is not defined
+2023-06-13 17:41:11,533 - ERROR - An unexpected error occurred: name 'manual_vent' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main_copy.py", line 143, in <module>
+    vent_control(manual_vent)
+NameError: name 'manual_vent' is not defined
+2023-06-13 17:44:49,339 - ERROR - An unexpected error occurred: name 'level_value' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main_copy.py", line 143, in <module>
+    print(f"Kühlung Stufe {level_value}")
+NameError: name 'level_value' is not defined
+2023-06-13 18:22:55,106 - ERROR - PostgreSQL database error: current transaction is aborted, commands ignored until end of transaction block
+
+2023-06-13 18:32:08,587 - ERROR - PostgreSQL database error: relation "vent_stats" does not exist
+LINE 1: SELECT MAX(vent_stat_id) FROM vent_stats
+                                      ^
+
+2023-06-13 18:58:54,129 - ERROR - PostgreSQL database error: duplicate key value violates unique constraint "event_pkey"
+DETAIL:  Key (event_id)=(1) already exists.
+
+2023-06-13 18:59:39,164 - ERROR - PostgreSQL database error: duplicate key value violates unique constraint "event_pkey"
+DETAIL:  Key (event_id)=(1) already exists.
+

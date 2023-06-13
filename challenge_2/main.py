@@ -7,7 +7,11 @@ import paho.mqtt.client as mqtt
 import threading
 
 # Configure logging
-logging.basicConfig(filename='script.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    filename='//Workshop/challenge_2/script.log', 
+    level=logging.ERROR, 
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 ser_temp = serial.Serial('/dev/ttyACM0', 9600)  # Arduino Temperatur
 ser_vent = serial.Serial('/dev/ttyACM1', 9600)  # Arduino Ventilator
@@ -28,9 +32,12 @@ vent = 0
 duration = 300
 start_time = time.time()
 event = False
+current_speed = 0
+
 
 manual_mode = False
-level_value = 0
+manual_level = 0
+manual_vent = 0
 
 global reading_ID
 reading_ID = 1
@@ -39,12 +46,13 @@ vent_stat_ID = 1
 global event_ID
 event_ID = 1
 
-temp_5 = 25.00
-temp_4 = 24.80
-temp_3 = 24.60
-temp_2 = 24.40
-temp_1 = 24.20
-temp_wanted = 24.00
+temp_wanted = 25.00
+num_levels = 5
+level_difference = 0.20
+temperatures = []
+for i in range(num_levels):
+	temperatures.append(temp_wanted + (i * level_difference))
+temperatures.append(temperatures[num_levels-1] + level_difference)
 
 v_speed_5 = 255
 v_speed_4 = 210
@@ -76,19 +84,23 @@ def on_connect(client, userdata, flags, rc):
 
 # Callback function for the on_message event
 def on_message(client, userdata, msg):
-	global manual_mode, level_value, vent
+	global manual_mode, manual_level, manual_vent
 	print("Received message: " + str(msg.payload.decode()))
 	if msg.topic == mqtt_setting:
 		if (str(msg.payload.decode())) == 'True':
 			manual_mode = True
 			print("Manual Mode active")
+			activate_leds(manual_level)
+			vent_control(manual_vent)
 		elif (str(msg.payload.decode())) == 'False':
 			manual_mode = False
 			print("Automatic Mode active")
+			activate_leds(level)
+			vent_control(current_speed)
 		else:
 			print(manual_mode)
 	elif msg.topic == mqtt_level:
-		level_value = int(msg.payload.decode())
+		manual_level = int(msg.payload.decode())
 		vent_mapping = {
     		0: 0,
     		1: v_speed_1,
@@ -97,8 +109,8 @@ def on_message(client, userdata, msg):
 		    4: v_speed_4,
     		5: v_speed_5
 		}
-		vent = vent_mapping.get(level_value)
-		print("Recieved Level Value:", level_value)
+		manual_vent = vent_mapping.get(manual_level)
+		print("Recieved Level Value:", manual_level)
 
 # Function to start the MQTT client
 def start_mqtt_client():
@@ -117,6 +129,18 @@ def publish_message(topic, message):
 	client.publish(topic, message)
 	client.disconnect()
 
+def get_next_id(table):
+    cursor = connection.cursor()
+    table_id = table + "_id"
+    select_query = f"SELECT MAX({table_id}) FROM {table}"
+    cursor.execute(select_query)
+    table_id_row = cursor.fetchone()
+    cursor.close()
+    if table_id_row[0] is not None:
+        return(table_id_row[0] + 1)
+    else:
+	    return 1
+ 
 try:
 	# connect to Database
 	connection = psycopg2.connect(
@@ -139,19 +163,18 @@ try:
 		manual_mode
 
 		if manual_mode == True:
-			print(level_value)
-			print(f"Kühlung Stufe {level_value}")
-			vent_control(vent)
-			activate_leds(level_value)
+			print(f"Kühlung Stufe {manual_level}")
+			vent_control(manual_vent)
+			activate_leds(manual_level)
 
 		elif manual_mode == False:
 			temperature_thresholds = [
-				(temp_5, 5, v_speed_5),
-				(temp_4, 4, v_speed_4),
-				(temp_3, 3, v_speed_3),
-				(temp_2, 2, v_speed_2),
-				(temp_1, 1, v_speed_1),
-				(temp_wanted, 0, 0)
+				(temperatures[5], 5, v_speed_5),
+				(temperatures[4], 4, v_speed_4),
+				(temperatures[3], 3, v_speed_3),
+				(temperatures[2], 2, v_speed_2),
+				(temperatures[1], 1, v_speed_1),
+				(temperatures[0], 0, 0)
 			]
 
 			# Iterate over the temperature thresholds in reverse order
@@ -162,13 +185,13 @@ try:
 					print(f"Kühlung Stufe {level}")
 					activate_leds(level)
 					vent_control(speed)
+					current_speed = speed
 					break  # Exit the loop after the first match
 				else:
 					if not temp:
 						print("No temperature value")
 					else:
-						print("Kühl genug")
-						break
+						continue
 					activate_leds(0)
 					vent_control(0)
 
@@ -177,16 +200,7 @@ try:
 
 		# SQL Insertion for Temp
 		if temp != temp_saved:
-			# getting highest ID
-			cursor = connection.cursor()
-			select_query = f"SELECT MAX(reading_id) FROM reading"
-			cursor.execute(select_query)
-			reading_ID_row = cursor.fetchone()
-			if reading_ID_row[0] is not None:
-				reading_ID = reading_ID_row[0] + 1
-			else:
-				reading_ID = 1
-			cursor.close()
+			reading_ID = get_next_id("reading")
 
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
@@ -207,16 +221,7 @@ try:
 
 		# SQL Insertion for Ventilation
 		if vent != vent_saved:
-			# getting highest ID
-			cursor = connection.cursor()
-			select_query = f"SELECT MAX(vent_stat_id) FROM vent_stats"
-			cursor.execute(select_query)
-			vent_stat_ID_row = cursor.fetchone()
-			if vent_stat_ID_row[0] is not None:
-				vent_stat_ID = vent_stat_ID_row[0] + 1
-			else:
-				vent_stat_ID = 1
-			cursor.close()
+			vent_stat_ID = get_next_id("vent_stat")
 
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
@@ -224,7 +229,7 @@ try:
 			# adding new data
 			cursor = connection.cursor()
 			data_to_insert = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
-			insert_query = f"INSERT INTO vent_stats VALUES (%s, %s, %s, %s)"
+			insert_query = f"INSERT INTO vent_stat VALUES (%s, %s, %s, %s)"
 			cursor.execute(insert_query, data_to_insert)
 			connection.commit()
 			cursor.close()
@@ -232,20 +237,11 @@ try:
 
 			# This was indeed an event (adding event afterwards)
 			event = True
-   
+
 			vent_saved = vent
 
 		if event:
-			# getting highest ID
-			cursor = connection.cursor()
-			select_query = f"SELECT MAX(event_id) FROM events"
-			cursor.execute(select_query)
-			event_ID_row = cursor.fetchone()
-			if event_ID_row[0] is not None:
-				event_ID = event_ID_row[0] + 1
-			else:
-				event_ID = 1
-			cursor.close()
+			event_ID = get_next_id("event")
 
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
@@ -253,7 +249,7 @@ try:
 			# adding new data
 			cursor = connection.cursor()
 			data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
-			insert_query = f"INSERT INTO events VALUES (%s, %s, %s, %s, %s)"
+			insert_query = f"INSERT INTO event VALUES (%s, %s, %s, %s, %s)"
 			cursor.execute(insert_query, data_to_insert)
 			connection.commit()
 			cursor.close()
