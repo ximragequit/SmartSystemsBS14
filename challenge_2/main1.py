@@ -15,6 +15,8 @@ ser_led = serial.Serial('/dev/ttyACM2', 9600)   # Arduino LED
 
 mqtt_broker = "localhost"
 mqtt_port = 1883
+mqtt_usr = "admin"
+mqtt_passw = "testing1234"
 mqtt_temp = "topic/temp"
 mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
@@ -80,6 +82,7 @@ def on_message(client, userdata, msg):
 # Function to start the MQTT client
 def start_mqtt_client():
 	client = mqtt.Client()
+	client.username_pw_set(mqtt_usr, mqtt_passw)
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect(mqtt_broker, mqtt_port, 60)
@@ -88,8 +91,10 @@ def start_mqtt_client():
 # Function to publish a message
 def publish_message(topic, message):
 	client = mqtt.Client()
+	client.username_pw_set(mqtt_usr, mqtt_passw)
 	client.connect(mqtt_broker, mqtt_port, 60)
 	client.publish(topic, message)
+	print("Published: ", topic, message)
 	client.disconnect()
 
 try:
@@ -111,6 +116,7 @@ try:
 
 		message_temp = str(temp)
 		publish_message(mqtt_temp, message_temp)
+		print(mqtt_temp, message_temp)
 
 		if manual_mode:
 			print("here")

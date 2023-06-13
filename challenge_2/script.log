@@ -27,3 +27,11 @@ Traceback (most recent call last):
   File "/Workshop/challenge_2/node-RED_MQTT.py", line 64, in on_connect
     print("Verbunden mit dem MQTT-Broker: " + mqtt_broker)
 NameError: name 'mqtt_broker' is not defined
+2023-06-13 12:43:27,121 - ERROR - Serial communication error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2023-06-13 12:44:01,313 - ERROR - Serial communication error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2023-06-13 12:44:19,056 - ERROR - Serial communication error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2023-06-13 13:01:29,800 - ERROR - An unexpected error occurred: name 'client' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main1.py", line 115, in <module>
+    client.publish_massage = publish_message(mqtt_temp, message_temp)
+NameError: name 'client' is not defined
