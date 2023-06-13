@@ -68,3 +68,9 @@ INSERT INTO sensor VALUES
 
 INSERT INTO vent VALUES
 (1,'Ventilator','main');
+
+INSERT INTO reading VALUES
+(1,1,00.00,'00:00:00');
+
+INSERT INTO vent_stats VALUES
+(1,1,0,'00:00:00');

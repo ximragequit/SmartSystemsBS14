@@ -1,0 +1,29 @@
+2023-06-13 09:44:58,896 - ERROR - An unexpected error occurred: name 'localhost' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/node-RED_MQTT.py", line 91, in <module>
+    client.connect(localhost, 1883, 60)
+NameError: name 'localhost' is not defined
+2023-06-13 09:45:43,489 - ERROR - An unexpected error occurred: name 'host' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/node-RED_MQTT.py", line 91, in <module>
+    client.connect(host, 1883, 60)
+NameError: name 'host' is not defined
+2023-06-13 10:27:11,443 - ERROR - An unexpected error occurred: name 'mqtt_broker' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/node-RED_MQTT.py", line 91, in <module>
+    client.loop_forever()
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 1756, in loop_forever
+    rc = self._loop(timeout)
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 1164, in _loop
+    rc = self.loop_read()
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 3039, in _packet_handle
+    return self._handle_connack()
+  File "/usr/local/lib/python3.9/dist-packages/paho/mqtt/client.py", line 3138, in _handle_connack
+    on_connect(
+  File "/Workshop/challenge_2/node-RED_MQTT.py", line 64, in on_connect
+    print("Verbunden mit dem MQTT-Broker: " + mqtt_broker)
+NameError: name 'mqtt_broker' is not defined
