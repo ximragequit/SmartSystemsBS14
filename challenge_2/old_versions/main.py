@@ -3,8 +3,6 @@ import time
 import psycopg2
 import logging
 from datetime import datetime
-import paho.mqtt.client as mqtt
-
 
 # Configure logging
 logging.basicConfig(filename='script.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -12,8 +10,6 @@ logging.basicConfig(filename='script.log', level=logging.ERROR, format='%(asctim
 ser_temp = serial.Serial('/dev/ttyACM0', 9600)  # Arduino Temperatur
 ser_vent = serial.Serial('/dev/ttyACM1', 9600)  # Arduino Ventilator
 ser_led = serial.Serial('/dev/ttyACM2', 9600)   # Arduino LED
-
-mqtt_broker = "localhost"
 
 temp_saved = 0.00
 temp = 0.00
@@ -61,8 +57,6 @@ def vent_control(speed):
         ser_vent.write(str(int(str(vent))).encode()) # Wanted voltage for right speed
         time.sleep(1.5)
 
-
-
 try:
     # connect to Database
     connection = psycopg2.connect(
@@ -73,19 +67,6 @@ try:
     )
     print("Connected to the PostgreSQL database!")
 
-
-    # Verbindung zum MQTT-Broker herstellen
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
-
-    # Verbindung zum MQTT-Broker herstellen
-    client.connect(mqtt_broker, 1883, 60)
-
-    # Unendliche Schleife, um auf eingehende MQTT-Nachrichten zu warten
-    client.loop_forever()
-
-    client.on_connect = on_connect
 
     while True:
         temp = ser_temp.readline().decode('utf-8').strip()
