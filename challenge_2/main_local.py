@@ -25,12 +25,6 @@ mqtt_temp = "topic/temp"
 mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
 
-db_host = '104.211.25.177'
-db_port = '6666'
-db_database = 'icetruck'
-db_usr = 'admin_hs'
-db_pw = 'Testing1234'
-
 temp_saved = 0.00
 temp = 0.00
 vent_saved = 0
@@ -39,6 +33,7 @@ duration = 300
 start_time = time.time()
 event = False
 current_speed = 0
+
 
 manual_mode = False
 manual_level = 0
@@ -54,16 +49,10 @@ event_ID = 1
 temp_wanted = 25.00
 num_levels = 5
 level_difference = 0.20
-max_speed = 255
-min_speed = 120
 temperatures = []
-# Array of speeds work with 5 levels, but not other count; trying to find function for that
-v_speeds = [min_speed]
 for i in range(num_levels):
 	temperatures.append(temp_wanted + (i * level_difference))
-	v_speeds.append(v_speeds[i]+(max_speed - min_speed)/(num_levels*2)*i)
 temperatures.append(temperatures[num_levels-1] + level_difference)
-v_speeds.pop(0)
 
 v_speed_5 = 255
 v_speed_4 = 210
@@ -152,29 +141,13 @@ def get_next_id(table):
     else:
 	    return 1
  
-# not implemented yet, just prepared
-def db_insert_data(table, data):
-    cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM {table} LIMIT 0")
-    colnames = [desc[0] for desc in cursor.description]
-    formatted_columns = '(' + ', '.join(colnames) + ')'
-    cursor.close()
-    
-    # Needs a check if data has same amount of Contents as there are Columns in this table
-    cursor = connection.cursor()
-    cursor.execute(f"INSERT INTO reading {formatted_columns} VALUES {data};")
-    connection.commit()
-    cursor.close()
-    print('Inserted',data,'\nninto',table)
-  
 try:
 	# connect to Database
 	connection = psycopg2.connect(
-	host = db_host,
-	port = db_port,
-	database = db_database,
-	user = db_usr,
-	password = db_pw
+	host='localhost',
+	database='postgres',
+	user='postgres',
+	password='testing1234'
 	)
 	print("Connected to the PostgreSQL database!")
 
@@ -227,7 +200,7 @@ try:
 
 		# SQL Insertion for Temp
 		if temp != temp_saved:
-			reading_ID = db_get_next_pk_id("reading")
+			reading_ID = get_next_id("reading")
 
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
@@ -248,7 +221,7 @@ try:
 
 		# SQL Insertion for Ventilation
 		if vent != vent_saved:
-			vent_stat_ID = db_get_next_pk_id("vent_stat")
+			vent_stat_ID = get_next_id("vent_stat")
 
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
@@ -268,7 +241,8 @@ try:
 			vent_saved = vent
 
 		if event:
-			event_ID = db_get_next_pk_id("event")
+			event_ID = get_next_id("event")
+
 			# getting time
 			current_time = datetime.now().strftime("%H:%M:%S")
 
