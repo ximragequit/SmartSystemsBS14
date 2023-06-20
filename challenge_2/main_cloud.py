@@ -26,7 +26,7 @@ mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
 
 db_host = '104.211.25.177'
-db_port = '6666'
+db_port = '5432'
 db_database = 'icetruck'
 db_usr = 'admin_hs'
 db_pw = 'Testing1234'
@@ -140,7 +140,7 @@ def publish_message(topic, message):
 	client.publish(topic, message)
 	client.disconnect()
 
-def get_next_id(table):
+def db_get_next_pk_id(table):
     cursor = connection.cursor()
     table_id = table + "_id"
     select_query = f"SELECT MAX({table_id}) FROM {table}"
@@ -308,9 +308,9 @@ finally:
 	# Close the database connection
 	if connection:
 		connection.close()
-		print("PostgreSQL connection closed.")
+		print("__________________________\nPostgreSQL connection closed.")
 	ser_led.close()
 	ser_temp.close()
 	ser_vent.close()
-	print("closing arduinos and ending")
+	print("closing arduinos and ending.\n__________________________")
 	time.sleep(1)
