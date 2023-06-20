@@ -62,3 +62,15 @@ DETAIL:  Key (event_id)=(1) already exists.
 2023-06-13 18:59:39,164 - ERROR - PostgreSQL database error: duplicate key value violates unique constraint "event_pkey"
 DETAIL:  Key (event_id)=(1) already exists.
 
+2023-06-20 11:10:13,083 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+
+2023-06-20 11:11:39,309 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+
+2023-06-20 11:13:51,885 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+
+2023-06-20 11:20:22,088 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+
+2023-06-20 11:20:35,439 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+
+2023-06-20 11:22:16,071 - ERROR - PostgreSQL database error: invalid integer value "{db_port}" for connection option "port"
+

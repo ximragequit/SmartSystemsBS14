@@ -26,7 +26,7 @@ mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
 
 db_host = '104.211.25.177'
-db_port = '6666',
+db_port = '6666'
 db_database = 'icetruck'
 db_usr = 'admin_hs'
 db_pw = 'Testing1234'
@@ -170,11 +170,11 @@ def db_insert_data(table, data):
 try:
 	# connect to Database
 	connection = psycopg2.connect(
-	host='{db_host}',
-	port='{db_port}',
-	database='{db_database}',
-	user='{db_usr}',
-	password='{db_pw}'
+	host = db_host,
+	port = db_port,
+	database = db_database,
+	user = db_usr,
+	password = db_pw
 	)
 	print("Connected to the PostgreSQL database!")
 
