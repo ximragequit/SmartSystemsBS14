@@ -25,10 +25,11 @@ mqtt_temp = "topic/temp"
 mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
 
-db_host = 'localhost'
-db_database = 'database'
-db_usr = 'postgres'
-db_pw = 'testing1234'
+db_host = '104.211.25.177'
+db_port = '6666',
+db_database = 'icetruck'
+db_usr = 'admin_hs'
+db_pw = 'Testing1234'
 
 temp_saved = 0.00
 temp = 0.00
@@ -170,6 +171,7 @@ try:
 	# connect to Database
 	connection = psycopg2.connect(
 	host='{db_host}',
+	port='{db_port}',
 	database='{db_database}',
 	user='{db_usr}',
 	password='{db_pw}'
