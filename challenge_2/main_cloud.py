@@ -25,6 +25,8 @@ mqtt_temp = "topic/temp"
 mqtt_level = "topic/level"
 mqtt_setting = "topic/setting"
 
+terminate_flag = threading.Event()
+
 db_host = '104.211.25.177'
 db_port = '5432'
 db_database = 'icetruck'
@@ -58,6 +60,7 @@ max_speed = 255
 min_speed = 120
 temperatures = []
 v_speeds = []
+
 for i in range(num_levels):
 	temperatures.append(temp_wanted + (i * level_difference))
 
@@ -127,7 +130,12 @@ def start_mqtt_client():
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect(mqtt_broker, mqtt_port, 60)
-	client.loop_forever()
+ 
+	while not terminate_flag.is_set():
+		client.loop()
+		time.sleep(0.1)
+	
+	client.disconnect()
 
 # Function to publish a message
 def publish_message(topic, message):
@@ -284,8 +292,14 @@ finally:
 	if connection:
 		connection.close()
 		print("__________________________\nPostgreSQL connection closed.")
+	activate_leds(0)
+	vent_control(0)
+	time.sleep(0.5)
 	ser_led.close()
 	ser_temp.close()
 	ser_vent.close()
-	print("closing arduinos and ending.\n__________________________")
+	print("__________________________\nArduino connection closed.")
+	terminate_flag.set()
+	mqtt_thread.join()
+	print("__________________________\nMQTT client terminated.")
 	time.sleep(1)
