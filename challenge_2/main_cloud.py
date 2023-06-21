@@ -57,19 +57,16 @@ level_difference = 0.20
 max_speed = 255
 min_speed = 120
 temperatures = []
-# Array of speeds work with 5 levels, but not other count; trying to find function for that
-v_speeds = [min_speed]
+v_speeds = []
 for i in range(num_levels):
 	temperatures.append(temp_wanted + (i * level_difference))
-	v_speeds.append(v_speeds[i]+(max_speed - min_speed)/(num_levels*2)*i)
-temperatures.append(temperatures[num_levels-1] + level_difference)
-v_speeds.pop(0)
 
-v_speed_5 = 255
-v_speed_4 = 210
-v_speed_3 = 160
-v_speed_2 = 130
-v_speed_1 = 120
+	t = i / (num_levels - 1)  # Wertebereich von 0 bis 1
+	x = t * t  # Quadratische Funktion
+	wert = 120 + x * (255 - 120)  # Skalierung auf gewünschten Wertebereich
+	v_speeds.append(round(wert))
+temperatures.append(temperatures[num_levels-1] + level_difference)
+v_speeds.insert(0,0)
 
 def activate_leds(level):
 	led_state = [1] * level + [0] * (5 - level)  # Create a list of LED states
@@ -113,12 +110,12 @@ def on_message(client, userdata, msg):
 	elif msg.topic == mqtt_level:
 		manual_level = int(msg.payload.decode())
 		vent_mapping = {
-    		0: 0,
-    		1: v_speed_1,
-    		2: v_speed_2,
-    		3: v_speed_3,
-		    4: v_speed_4,
-    		5: v_speed_5
+    		0: v_speeds[0],
+    		1: v_speeds[1],
+    		2: v_speeds[2],
+    		3: v_speeds[3],
+		    4: v_speeds[4],
+    		5: v_speeds[5]
 		}
 		manual_vent = vent_mapping.get(manual_level)
 		print("Recieved Level Value:", manual_level)
@@ -162,10 +159,10 @@ def db_insert_data(table, data):
     
     # Needs a check if data has same amount of Contents as there are Columns in this table
     cursor = connection.cursor()
-    cursor.execute(f"INSERT INTO reading {formatted_columns} VALUES {data};")
+    cursor.execute(f"INSERT INTO {table} {formatted_columns} VALUES {data};")
     connection.commit()
     cursor.close()
-    print('Inserted',data,'\nninto',table)
+    print('Inserted',data,'into',table, formatted_columns)
   
 try:
 	# connect to Database
@@ -187,7 +184,6 @@ try:
 
 		message_temp = str(temp)
 		publish_message(mqtt_temp, message_temp)
-		manual_mode
 
 		if manual_mode == True:
 			print(f"Kühlung Stufe {manual_level}")
@@ -196,31 +192,24 @@ try:
 
 		elif manual_mode == False:
 			temperature_thresholds = [
-				(temperatures[5], 5, v_speed_5),
-				(temperatures[4], 4, v_speed_4),
-				(temperatures[3], 3, v_speed_3),
-				(temperatures[2], 2, v_speed_2),
-				(temperatures[1], 1, v_speed_1),
-				(temperatures[0], 0, 0)
+				(temperatures[5], 5, v_speeds[5]),
+				(temperatures[4], 4, v_speeds[4]),
+				(temperatures[3], 3, v_speeds[3]),
+				(temperatures[2], 2, v_speeds[2]),
+				(temperatures[1], 1, v_speeds[1]),
+				(temperatures[0], 0, v_speeds[0])
 			]
 
 			# Iterate over the temperature thresholds in reverse order
 			for threshold, level, speed in temperature_thresholds:
-				if not temp:
+				if not temp or float(temp) < 0:
 					continue  # Skip the current iteration if there is no value in temp
-				if float(temp) >= threshold:
+				elif float(temp) >= threshold:
 					print(f"Kühlung Stufe {level}")
 					activate_leds(level)
 					vent_control(speed)
 					current_speed = speed
 					break  # Exit the loop after the first match
-				else:
-					if not temp:
-						print("No temperature value")
-					else:
-						continue
-					activate_leds(0)
-					vent_control(0)
 
 		else:
 			print("ERROR\nManual Mode holds:", manual_mode)
@@ -233,13 +222,8 @@ try:
 			current_time = datetime.now().strftime("%H:%M:%S")
 
 			# adding new data
-			cursor = connection.cursor()
-			data_to_insert = (int(reading_ID), int(1), float(temp), str(current_time))
-			insert_query = f"INSERT INTO reading VALUES (%s, %s, %s, %s)"
-			cursor.execute(insert_query, data_to_insert)
-			connection.commit()
-			cursor.close()
-			print('Temperature', temp, 'inserted into the table!')
+			data = (int(reading_ID), int(1), float(temp), str(current_time))
+			db_insert_data('reading', data)
 
 			# This was indeed an event (adding event afterwards)
 			event = True
@@ -254,13 +238,8 @@ try:
 			current_time = datetime.now().strftime("%H:%M:%S")
 
 			# adding new data
-			cursor = connection.cursor()
-			data_to_insert = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
-			insert_query = f"INSERT INTO vent_stat VALUES (%s, %s, %s, %s)"
-			cursor.execute(insert_query, data_to_insert)
-			connection.commit()
-			cursor.close()
-			print('Ventilation', vent, 'inserted into the table!')
+			data = (int(vent_stat_ID), 1, int(vent) ,str(current_time))
+			db_insert_data('vent_stat', data)
 
 			# This was indeed an event (adding event afterwards)
 			event = True
@@ -273,13 +252,9 @@ try:
 			current_time = datetime.now().strftime("%H:%M:%S")
 
 			# adding new data
-			cursor = connection.cursor()
-			data_to_insert = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
-			insert_query = f"INSERT INTO event VALUES (%s, %s, %s, %s, %s)"
-			cursor.execute(insert_query, data_to_insert)
-			connection.commit()
-			cursor.close()
-			print("Event inserted into the table!\n-----------------------------")
+			data = (int(event_ID),str(current_time),int(reading_ID),int(vent_stat_ID),float(temp))
+			db_insert_data('event', data)
+			print("____________________________")
 
 			# need to check again next time
 			event = False

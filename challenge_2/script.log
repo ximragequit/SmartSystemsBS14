@@ -1,0 +1,18 @@
+2023-06-21 09:25:45,300 - ERROR - An unexpected error occurred: name 'ser_temp' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main_cloud.py", line 186, in <module>
+    temp = ser_temp.readline().decode('utf-8').strip()
+NameError: name 'ser_temp' is not defined
+2023-06-21 09:26:29,099 - ERROR - An unexpected error occurred: '<' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+  File "/Workshop/challenge_2/main_cloud.py", line 208, in <module>
+    if not temp or temp < 0:
+TypeError: '<' not supported between instances of 'str' and 'int'
+2023-06-21 09:27:14,685 - ERROR - PostgreSQL database error: syntax error at or near "True"
+LINE 1: SELECT * FROM True LIMIT 0
+                      ^
+
+2023-06-21 09:27:55,848 - ERROR - PostgreSQL database error: syntax error at or near "True"
+LINE 1: SELECT * FROM True LIMIT 0
+                      ^
+
