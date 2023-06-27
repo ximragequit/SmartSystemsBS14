@@ -1,24 +1,18 @@
-Name: Homer Jay Simpson
-Age: 39 years
-Occupation: Safety Inspector at the Nuclear Power Plant
-Gender: Male
-Residence: Springfield
+Name: Homer Simpson
+Occupation: Safety Inspector
+Residence: Wilhelmsburg
 
 Background:
-Homer Simpson is the lovable head of the Simpson family and one of the most iconic cartoon characters of all time. 
-He resides in the town of Springfield and works as a safety inspector at the local nuclear power plant.
+Homer Simpson is a resident of Wilhelmsburg, a small town with a big heart. He works as a safety inspector and relies on the ferry for his daily commute. 
+However, the ferry's schedule remains an elusive mystery, making each journey an adventure filled with unexpected twists and turns.
 
 Personality:
-Homer is an endearing yet clumsy man with an eccentric personality. 
-He is often lazy and easily distracted but tends to embrace his mistakes with good-natured obliviousness. 
-Homer has a fondness for good food, particularly fast food and donuts, and is constantly in pursuit of relaxation and comfort.
+Homer is a lovable, good-natured man with a penchant for mischief. He finds humor in the simplest of things and approaches life with an optimistic outlook. 
+Despite the lack of accessible ferry information, Homer embraces the unpredictability and turns it into an opportunity for laughter.
 
-Needs and Goals:
+Goals:
 
-Food and Enjoyment: Homer loves hearty meals and indulgent treats. 
-He seeks culinary pleasures and is always on the lookout for new taste experiences.
-Relaxation and Comfort: Homer prefers a simple and laid-back lifestyle. He enjoys lounging on the couch in front of the TV or taking a nap.
-Love and Affection: Although Homer may not always be the smartest or most responsible person, he yearns for the love and affection of his wife Marge and his children. 
-He is willing to do anything for them and cherishes his family above all else.
-Homer Simpson is an iconic cartoon persona, renowned for his distinctive traits and comedic character. 
-Despite his flaws and clumsiness, he captures the hearts of viewers with his charm and lovable nature.
+Smooth Commute: Homer hopes for a smooth ferry ride that gets him to work on time, even if the information is hard to come by.
+Family Time: Homer cherishes moments with his family and uses the ferry rides to unwind and enjoy the scenic views, making the most of his commuting time.
+Homer Simpson, the cheerful resident of Wilhelmsburg, faces the challenge of an elusive ferry schedule with a smile on his face. His positive attitude and 
+ability to find joy in uncertainty make him a beloved member of the community.
