@@ -11,12 +11,12 @@ DROP TABLE IF EXISTS FerryLine;
 
 -- Create Ferry table
 CREATE TABLE IF NOT EXISTS Ferry (
-  ID INT PRIMARY KEY,
+  FerryID INT PRIMARY KEY,
   Name TEXT,
   Availability BOOLEAN
 );
 
-INSERT INTO Ferry (ID, Name, Availability)
+INSERT INTO Ferry (FerryID, Name, Availability)
 VALUES
   (1, 'AIDAaura', 1),
   (2, 'AIDAbella', 1),
@@ -203,14 +203,14 @@ VALUES
 
 -- Create Captain table
 CREATE TABLE IF NOT EXISTS Captain (
-  ID INT PRIMARY KEY,
+  CaptainID INT PRIMARY KEY,
   Name TEXT,
   Availability BOOLEAN,
   FerryID INT,
-  FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
+  FOREIGN KEY (FerryID) REFERENCES Ferry(FerryID)
 );
 
-INSERT INTO Captain (ID, Name, Availability, FerryID)
+INSERT INTO Captain (CaptainID, Name, Availability, FerryID)
 VALUES
 (1, 'John Smith', true, 1),
 (2, 'Emily Johnson', true, 2),
@@ -245,47 +245,49 @@ VALUES
 
 -- Create Outage table
 CREATE TABLE IF NOT EXISTS Outage (
-  ID INT PRIMARY KEY,
+  OutageID INT PRIMARY KEY,
   FerryID INT,
   OutageDate DATE,
-  FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
-);
-
--- Create Trips table
-CREATE TABLE IF NOT EXISTS Trips (
-  ID INT PRIMARY KEY,
-  FerryID INT,
-  CaptainID INT,
-  DepartureTime TIME,
-  FOREIGN KEY (FerryLineID) REFERENCES Ferry(LineID),	
-  FOREIGN KEY (FerryID) REFERENCES Ferry(ID),
-  FOREIGN KEY (CaptainID) REFERENCES Captain(ID)
+  FOREIGN KEY (FerryID) REFERENCES Ferry(FerryID)
 );
 
 -- Create WaterLevel table
 CREATE TABLE IF NOT EXISTS WaterLevel (
-  ID INT PRIMARY KEY,
+  WaterLevelID INT PRIMARY KEY,
   Timestamp DATETIME,
   WaterLevel FLOAT
 );
 
 -- Create Schedule table
 CREATE TABLE IF NOT EXISTS Schedule (
-  ID INT PRIMARY KEY,
+  ScheduleID INT PRIMARY KEY,
   FerryID INT,
   DepartureTime TIME,
-  FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
+  FOREIGN KEY (FerryID) REFERENCES Ferry(FerryID)
+);
+
+ -- Create FerryLine 
+CREATE TABLE IF NOT EXISTS FerryLine (
+  FerryLineID INT Primary Key,
+  Line INT
 );
 
 -- Create FerryLine_Ferry table
 CREATE TABLE IF NOT EXISTS FerryLine_Ferry (
-  FerryLine INT,
+  FerryLineID INT,
   FerryID INT,
-  FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
-  
+  FOREIGN KEY (FerryID) REFERENCES Ferry(FerryID),
+  FOREIGN KEY (FerryLineID) REFERENCES FerryLine(FerryLineID)
 );
- -- Create FerryLine 
-CREATE TABLE IF NOT EXISTS FerryLine(
-  FerryLineID INT Primary Key,
-  Line INT
+
+-- Create Trips table
+CREATE TABLE IF NOT EXISTS Trip (
+  TripID INT PRIMARY KEY,
+  FerryID INT,
+  FerryLineID INT,
+  CaptainID INT,
+  DepartureTime TIME,
+  FOREIGN KEY (FerryID) REFERENCES Ferry(FerryID),	
+  FOREIGN KEY (FerryLineID) REFERENCES FerryLine(FerryLineID),	
+  FOREIGN KEY (CaptainID) REFERENCES Captain(CaptainID)
 );
