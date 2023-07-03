@@ -208,6 +208,39 @@ CREATE TABLE IF NOT EXISTS Captain (
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
 );
 
+INSERT INTO Captain (ID, Name, Availability, FerryID)
+VALUES
+(1, 'John Smith', true, 1),
+(2, 'Emily Johnson', true, 2),
+(3, 'Michael Davis', false, 3),
+(4, 'Sarah Thompson', true, 4),
+(5, 'David Wilson', true, 5),
+(6, 'Jennifer Martinez', true, 6),
+(7, 'Christopher Lee', false, 7),
+(8, 'Amanda White', true, 8),
+(9, 'Matthew Hall', true, 9),
+(10, 'Laura Lopez', true, 10),
+(11, 'Daniel Clark', true, 11),
+(12, 'Melissa Hernandez', false, 12),
+(13, 'James Scott', true, 13),
+(14, 'Jessica Green', true, 14),
+(15, 'Ryan Adams', true, 15),
+(16, 'Elizabeth Baker', true, 16),
+(17, 'Andrew Carter', true, 17),
+(18, 'Stephanie Murphy', false, 18),
+(19, 'Jason Turner', true, 19),
+(20, 'Rebecca Rivera', true, 20),
+(21, 'Kevin Cook', true, 21),
+(22, 'Michelle Ward', true, 22),
+(23, 'Thomas Butler', false, 23),
+(24, 'Kimberly Nelson', true, 24),
+(25, 'Richard Cooper', true, 25),
+(26, 'Amy Stewart', true, 26),
+(27, 'Patrick Bell', true, 27),
+(28, 'Heather Phillips', false, 28),
+(29, 'Charles Reed', true, 29),
+(30, 'Samantha Morgan', true, 30);
+
 -- Create Outage table
 CREATE TABLE IF NOT EXISTS Outage (
   ID INT PRIMARY KEY,
@@ -222,6 +255,8 @@ CREATE TABLE IF NOT EXISTS Trips (
   FerryID INT,
   CaptainID INT,
   DepartureTime TIME,
+  Ferryline
+  FOREIGN KEY (FerryLine) REFERENCES Ferry(Line)	
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID),
   FOREIGN KEY (CaptainID) REFERENCES Captain(ID)
 );
@@ -243,8 +278,7 @@ CREATE TABLE IF NOT EXISTS Schedule (
 
 -- Create FerryLine table
 CREATE TABLE IF NOT EXISTS FerryLine (
-  ID INT PRIMARY KEY,
+  FerryLine INT PRIMARY KEY,
   FerryID INT,
-  Line TEXT,
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
 );
