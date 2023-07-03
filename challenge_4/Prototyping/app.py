@@ -7,7 +7,7 @@ app = Flask(__name__, template_folder='./Templates')
 
 logging.basicConfig(
     format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
-    filename = F'.\challenge_4\Prototyping\logs\{datetime.today().strftime("%y.%m.%d")}_py.log', 
+    filename = F'.\challenge_4\Prototyping\logs\{datetime.today().strftime("%y.%m.%d")}_flask-app.log', 
     encoding = 'utf-8', 
     level = logging.DEBUG,
     datefmt='%y.%m.%d %H:%M:%S'
