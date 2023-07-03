@@ -1,9 +1,9 @@
-from flask import Flask, request, render_template, g, current_app, jsonify
+from flask import Flask, render_template
+import os
 import logging
 from datetime import datetime
-import time
 
-app = Flask(__name__, template_folder='./Templates')
+app = Flask(__name__, template_folder='./website/templates', static_folder='./website/static')
 
 logging.basicConfig(
     format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
@@ -26,6 +26,10 @@ def handle_all_exceptions(error):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
 
 if __name__ == '__main__':
     app.run()
