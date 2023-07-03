@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS Schedule;
 DROP TABLE IF EXISTS WaterLevel;
 DROP TABLE IF EXISTS Captain;
 DROP TABLE IF EXISTS Ferry;
+DROP TABLE IF EXISTS FerryLine_Ferry;
+DROP TABLE IF EXISTS FerryLine;
 
 
 -- Create Ferry table
@@ -255,8 +257,7 @@ CREATE TABLE IF NOT EXISTS Trips (
   FerryID INT,
   CaptainID INT,
   DepartureTime TIME,
-  Ferryline
-  FOREIGN KEY (FerryLine) REFERENCES Ferry(Line)	
+  FOREIGN KEY (FerryLineID) REFERENCES Ferry(LineID),	
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID),
   FOREIGN KEY (CaptainID) REFERENCES Captain(ID)
 );
@@ -276,9 +277,15 @@ CREATE TABLE IF NOT EXISTS Schedule (
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
 );
 
--- Create FerryLine table
-CREATE TABLE IF NOT EXISTS FerryLine (
-  FerryLine INT PRIMARY KEY,
+-- Create FerryLine_Ferry table
+CREATE TABLE IF NOT EXISTS FerryLine_Ferry (
+  FerryLine INT,
   FerryID INT,
   FOREIGN KEY (FerryID) REFERENCES Ferry(ID)
+  
+);
+ -- Create FerryLine 
+CREATE TABLE IF NOT EXISTS FerryLine(
+  FerryLineID INT Primary Key,
+  Line INT
 );
