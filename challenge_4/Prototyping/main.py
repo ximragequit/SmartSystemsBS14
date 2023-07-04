@@ -11,8 +11,29 @@ logging.basicConfig(
     datefmt='%y.%m.%d %H:%M:%S'
     )
 
+ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
+ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
+
+def clear_display():
+    ser.write(b'C')
+
+def move_cursor(column, row):
+    ser.write(b'M')
+    ser.write(str(column).encode())
+    ser.write(b' ')
+    ser.write(str(row).encode())
+
+def write_text(text):
+    ser.write(b'W')
+    ser.write(text.encode())
+    ser.write(b'\n')
+
 def main():
     # main code
+    clear_display()
+    move_cursor(0, 0)
+    write_text("Hello, World!")
+    water = ser_water.readline().decode('utf-8').strip()
     pass
 
 
