@@ -15,18 +15,18 @@ ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
 ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
 
 def clear_display():
-    ser.write(b'C')
+    ser_display.write(b'C')
 
 def move_cursor(column, row):
-    ser.write(b'M')
-    ser.write(str(column).encode())
-    ser.write(b' ')
-    ser.write(str(row).encode())
+    ser_display.write(b'M')
+    ser_display.write(str(column).encode())
+    ser_display.write(b' ')
+    ser_display.write(str(row).encode())
 
 def write_text(text):
-    ser.write(b'W')
-    ser.write(text.encode())
-    ser.write(b'\n')
+    ser_display.write(b'W')
+    ser_display.write(text.encode())
+    ser_display.write(b'\n')
 
 def main():
     # main code
