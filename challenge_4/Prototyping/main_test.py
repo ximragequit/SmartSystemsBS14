@@ -24,6 +24,7 @@ mqtt_passw = "testing1234"
 mqtt_water = "topic/water"
 mqtt_gps = "topic/gps"
 mqtt_display = "topic/display"
+mqtt_availability = "topic/availability"
 
 terminate_flag = threading.Event()
 
@@ -35,6 +36,7 @@ db_pw = 'Testing1234'
 
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
+ferry_availability = True
 
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
@@ -49,6 +51,11 @@ def on_message(client, userdata, msg):
 	    actual_coordinates = (str(msg.payload.decode()))
 	elif msg.topic == mqtt_display:
         display_message = (str(msg.payload.decode()))
+    elif msg.topic == mqtt_availability:
+        if (str(msg.payload.decode())) == 'True':
+            ferry_availability = True
+        elif (str(msg.payload.decode())) == 'False':
+            ferry_availability = False
 
 # Function to start the MQTT client
 def start_mqtt_client():
@@ -111,12 +118,19 @@ def main():
         message_water = str(water)
         publish_message(mqtt_water, message_water)
 
+        if int(water) < 10: #ferry is available
+            ferry_availability = True
+        else:
+            ferry_availability = False
+
+        publish_message(mqtt_availability, ferry_availability)
+
         time_now = time.time()
 
-        if int(water) < 10: #ferry is available
+        if ferry_availability:
             clear_display()
             move_cursor(0, 0)
-            write_text("Faehre fahrt in XX Minuten.")
+            write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
         else:
             clear_display()
             move_cursor(0, 0)
