@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Fährt Sie?</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../static/style.css" />
+  <link rel="stylesheet" href="../static/73.css" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="../static/script.js"></script>
+  
+  <style>
+    .fakeimg {
+      height: 200px;
+      background: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="jumbotron text-center" style="margin-bottom: 0">
+    <h1>Ja! Die Fähre 73 fährt derzeit</h1>
+  </div>
+  <nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo" href="#">Die Fähren</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+    aria-label="Toggle navigation">
+    <i class="fas fa-bars text-white"></i>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <div class="hori-selector">
+        <div class="left"></div>
+        <div class="right"></div>
+      </div>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry61.html">61</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry62.html">62</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry64.html">64</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry68.html">68</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry72.html">72</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="ferry73.html">73</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferry75.html">75</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ferryHBEL.html">HBEL</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  <div id="content-section" class="page-content" style="padding-top: 10px">
+    <div class="container">
+      <div class="row">
+        <div id="Current-ferries" class="col-md-6 row justify-content-center col text-center">
+          <h1>Fähre halten ahh</h1>
+          <p>
+            
+          </p>
+          <!-- Add your content here for displaying the operating ferries and their details -->
+        </div>
+        <div i="Map" class="col-md-6 row justify-content-center col text-center">
+          <h1>Karte</h1>
+          <div id="map"></div>
+          <script src="../static/map.js"></script>
+          
+        </div>
+      </div>
+      <div id="Fahrplan" class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col text-center">
+            <h1>Fahrplan</h1>
+            <p>Diese Fähre fährt Montags bis Freitags</p>
+            <div style="padding-top: 10px; padding-bottom: 10px;">
+              <div style="text-align: center;">
+                <h2 class="d-none d-md-block">
+                  <div style="display: flex; align-items: center; justify-content: center;">
+                    <div style="flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; max-width: 80%">
+                      <span style="white-space: nowrap;">Landungsbrücken (Brücke 1)</span>
+                    </div>
+                    <div style="margin: 0 10px;">&rarr;</div>
+                    <div style="flex-shrink: 0;">Ernst-August-Schleuse</div>
+                  </div>
+                </h2>
+                <p class="d-md-none">
+                  Landungsbrücken (Brücke 1) <i class="fas fa-arrow-right fa-xs"></i> Ernst-August-Schleuse
+                </p>
+              </div>
+              <div class="table-responsive table-scrollable">
+                <table class="table table-spacing table-full-width">
+                  <tbody>
+                    <tr>
+                      <th>Landungsbrücken (Brücke 1)</th>
+                      <td>05:30</td>
+                      <td>05:50</td>
+                      <td>06:10</td>
+                      <td>06:30</td>
+                      <td>06:50</td>
+                      <td>07:10</td>
+                      <td>07:30</td>
+                      <td>07:50</td>
+                      <td>08:10</td>
+                      <td>08:30</td>
+                      <td>09:10</td>
+                      <td>09:50</td>
+                      <td>10:30</td>
+                      <td>11:10</td>
+                      <td>11:50</td>
+                      <td>12:30</td>
+                      <td>13:10</td>
+                      <td>13:50</td>
+                      <td>14:30</td>
+                      <td>14:50</td>
+                      <td>15:10</td>
+                      <td>15:30</td>
+                      <td>15:50</td>
+                      <td>16:10</td>
+                      <td>16:30</td>
+                      <td>16:50</td>
+                      <td>17:30</td>
+                      <td>18:10</td>
+                      <td>18:50</td>
+                      <td>19:30</td>
+                      <td>20:10</td>
+                      <td>20:50</td>
+                      <td>21:30</td>
+                    </tr>
+                    <tr>
+                      <th>Theater im Hafen</th>
+                      <td>05:33</td>
+                      <td>05:53</td>
+                      <td>06:13</td>
+                      <td>06:33</td>
+                      <td>06:53</td>
+                      <td>07:13</td>
+                      <td>07:33</td>
+                      <td>07:53</td>
+                      <td>08:13</td>
+                      <td>08:33</td>
+                      <td>09:13</td>
+                      <td>09:53</td>
+                      <td>10:33</td>
+                      <td>11:13</td>
+                      <td>11:53</td>
+                      <td>12:33</td>
+                      <td>13:13</td>
+                      <td>13:53</td>
+                      <td>14:33</td>
+                      <td>14:53</td>
+                      <td>15:13</td>
+                      <td>15:33</td>
+                      <td>15:53</td>
+                      <td>16:13</td>
+                      <td>16:33</td>
+                      <td>16:53</td>
+                      <td>17:33</td>
+                      <td>18:13</td>
+                      <td>18:53</td>
+                      <td>19:33</td>
+                      <td>20:13</td>
+                      <td>20:53</td>
+                      <td>21:33</td>
+                    </tr>
+                    <tr>
+                      <th>Argentinienbrücke</th>
+                      <td>05:42</td>
+                      <td>06:02</td>
+                      <td>06:22</td>
+                      <td>06:42</td>
+                      <td>07:02</td>
+                      <td>07:22</td>
+                      <td>07:42</td>
+                      <td>08:02</td>
+                      <td>08:22</td>
+                      <td>08:42</td>
+                      <td>09:22</td>
+                      <td>10:02</td>
+                      <td>10:42</td>
+                      <td>11:22</td>
+                      <td>12:02</td>
+                      <td>12:42</td>
+                      <td>13:22</td>
+                      <td>14:02</td>
+                      <td>14:42</td>
+                      <td>15:02</td>
+                      <td>15:22</td>
+                      <td>15:42</td>
+                      <td>16:02</td>
+                      <td>16:22</td>
+                      <td>16:42</td>
+                      <td>17:02</td>
+                      <td>17:42</td>
+                      <td>18:22</td>
+                      <td>19:02</td>
+                      <td>19:42</td>
+                      <td>20:22</td>
+                      <td>21:02</td>
+                      <td>21:42</td>
+                    </tr>
+                    <tr>
+                      <th>Ernst-August-Schleuse</th>
+                      <td>05:45</td>
+                      <td>06:05</td>
+                      <td>06:25</td>
+                      <td>06:45</td>
+                      <td>07:05</td>
+                      <td>07:25</td>
+                      <td>07:45</td>
+                      <td>08:05</td>
+                      <td>08:25</td>
+                      <td>08:45</td>
+                      <td>09:25</td>
+                      <td>10:05</td>
+                      <td>10:45</td>
+                      <td>11:25</td>
+                      <td>12:05</td>
+                      <td>12:45</td>
+                      <td>13:25</td>
+                      <td>14:05</td>
+                      <td>14:45</td>
+                      <td>15:05</td>
+                      <td>15:25</td>
+                      <td>15:45</td>
+                      <td>16:05</td>
+                      <td>16:25</td>
+                      <td>16:45</td>
+                      <td>17:05</td>
+                      <td>17:45</td>
+                      <td>18:25</td>
+                      <td>19:05</td>
+                      <td>19:45</td>
+                      <td>20:25</td>
+                      <td>21:05</td>
+                      <td>21:45</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style="padding-top: 10px; padding-bottom: 10px;">
+              <div style="text-align: center;">
+                <h2 class="d-none d-md-block">
+                  <div style="display: flex; align-items: center; justify-content: center;">
+                    <div style="flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; max-width: 80%">
+                      <span style="white-space: nowrap;">Ernst-August-Schleuse</span>
+                    </div>
+                    <div style="margin: 0 10px;">&rarr;</div>
+                    <div style="flex-shrink: 0;">Landungsbrücken (Brücke 1)</div>
+                  </div>
+                </h2>
+                <p class="d-md-none">
+                  Ernst-August-Schleuse <i class="fas fa-arrow-right fa-xs"></i> Landungsbrücken (Brücke 1)
+                </p>
+              </div>
+              <div class="table-responsive table-scrollable">
+                <table class="table table-spacing table-full-width">
+                  <tbody>
+                    <tr>
+                      <th>Ernst-August-Schleuse</th>
+                      <td>05:50</td>
+                      <td>06:10</td>
+                      <td>06:30</td>
+                      <td>06:50</td>
+                      <td>07:10</td>
+                      <td>07:30</td>
+                      <td>07:50</td>
+                      <td>08:10</td>
+                      <td>08:30</td>
+                      <td>08:50</td>
+                      <td>09:30</td>
+                      <td>10:10</td>
+                      <td>10:50</td>
+                      <td>11:30</td>
+                      <td>12:10</td>
+                      <td>12:50</td>
+                      <td>13:30</td>
+                      <td>14:10</td>
+                      <td>14:50</td>
+                      <td>15:10</td>
+                      <td>15:30</td>
+                      <td>15:50</td>
+                      <td>16:10</td>
+                      <td>16:30</td>
+                      <td>16:50</td>
+                      <td>17:10</td>
+                      <td>17:50</td>
+                      <td>18:30</td>
+                      <td>19:10</td>
+                      <td>19:50</td>
+                      <td>20:30</td>
+                      <td>21:10</td>
+                      <td>21:50</td>
+                    </tr>
+                    <tr>
+                      <th>Argentinienbrücke</th>
+                      <td>05:53</td>
+                      <td>06:13</td>
+                      <td>06:33</td>
+                      <td>06:53</td>
+                      <td>07:13</td>
+                      <td>07:33</td>
+                      <td>07:53</td>
+                      <td>08:13</td>
+                      <td>08:33</td>
+                      <td>08:53</td>
+                      <td>09:33</td>
+                      <td>10:13</td>
+                      <td>10:53</td>
+                      <td>11:33</td>
+                      <td>12:13</td>
+                      <td>12:53</td>
+                      <td>13:33</td>
+                      <td>14:13</td>
+                      <td>14:53</td>
+                      <td>15:13</td>
+                      <td>15:33</td>
+                      <td>15:53</td>
+                      <td>16:13</td>
+                      <td>16:33</td>
+                      <td>16:53</td>
+                      <td>17:13</td>
+                      <td>17:53</td>
+                      <td>18:33</td>
+                      <td>19:13</td>
+                      <td>19:53</td>
+                      <td>20:33</td>
+                      <td>21:13</td>
+                      <td>21:53</td>
+                    </tr>
+                    <tr>
+                      <th>Theater im Hafen</th>
+                      <td>06:02</td>
+                      <td>06:22</td>
+                      <td>06:42</td>
+                      <td>07:02</td>
+                      <td>07:22</td>
+                      <td>07:42</td>
+                      <td>08:02</td>
+                      <td>08:22</td>
+                      <td>08:42</td>
+                      <td>09:02</td>
+                      <td>09:42</td>
+                      <td>10:22</td>
+                      <td>11:02</td>
+                      <td>11:42</td>
+                      <td>12:22</td>
+                      <td>13:02</td>
+                      <td>13:42</td>
+                      <td>14:22</td>
+                      <td>15:02</td>
+                      <td>15:22</td>
+                      <td>15:42</td>
+                      <td>16:02</td>
+                      <td>16:22</td>
+                      <td>16:42</td>
+                      <td>17:02</td>
+                      <td>17:22</td>
+                      <td>18:02</td>
+                      <td>18:42</td>
+                      <td>19:22</td>
+                      <td>20:02</td>
+                      <td>20:42</td>
+                      <td>21:22</td>
+                      <td>22:02</td>
+                    </tr>
+                    <tr>
+                      <th>Landungsbrücken (Brücke 1)</th>
+                      <td>06:05</td>
+                      <td>06:25</td>
+                      <td>06:45</td>
+                      <td>07:05</td>
+                      <td>07:25</td>
+                      <td>07:45</td>
+                      <td>08:05</td>
+                      <td>08:25</td>
+                      <td>08:45</td>
+                      <td>09:05</td>
+                      <td>09:45</td>
+                      <td>10:25</td>
+                      <td>11:05</td>
+                      <td>11:45</td>
+                      <td>12:25</td>
+                      <td>13:05</td>
+                      <td>13:45</td>
+                      <td>14:25</td>
+                      <td>15:05</td>
+                      <td>15:25</td>
+                      <td>15:45</td>
+                      <td>16:05</td>
+                      <td>16:25</td>
+                      <td>16:45</td>
+                      <td>17:05</td>
+                      <td>17:25</td>
+                      <td>18:05</td>
+                      <td>18:45</td>
+                      <td>19:25</td>
+                      <td>20:05</td>
+                      <td>20:45</td>
+                      <td>21:25</td>
+                      <td>22:05</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="Statistics" class="row justify-content-center col text-center">
+        <div class="col-md-6">
+          <h1>Statistics</h1>
+          <p>
+            Show statistics such as departure delays, skipped stops, and
+            non-operational instances.
+          </p>
+          <!-- Add your content here for displaying the statistics -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="jumbotron text-center" style="margin-bottom: 0">
+    <p>Footer</p>
+  </div>
+</body>
+
+</html>
