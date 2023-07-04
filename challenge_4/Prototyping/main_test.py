@@ -33,6 +33,9 @@ db_database = 'ferry'
 db_usr = 'admin_hs'
 db_pw = 'Testing1234'
 
+display_message = "HADAG raus!"
+actual_coordinates = "your mum"
+
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
 	print("Connected to MQTT broker: " + mqtt_broker)
@@ -42,9 +45,10 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 	global manual_mode, manual_level, manual_vent
 	print("Received message: " + str(msg.payload.decode()))
-	if msg.topic == mqtt_water:
-	elif msg.topic == mqtt_gps:
-
+	if msg.topic == mqtt_gps:
+	    actual_coordinates = (str(msg.payload.decode()))
+	elif msg.topic == mqtt_display:
+        display_message = (str(msg.payload.decode()))
 
 # Function to start the MQTT client
 def start_mqtt_client():
@@ -84,16 +88,43 @@ def write_text(text):
 
 def main():
     # main code
+    # connect to Database
+    global connection
+    connection = psycopg2.connect(
+    host = db_host,
+    port = db_port,
+    database = db_database,
+    user = db_usr,
+    password = db_pw
+    )
+    print("Connected to the PostgreSQL database!")
 
     mqtt_thread = threading.Thread(target=start_mqtt_client)
     mqtt_thread.start()
 
     clear_display()
-    move_cursor(0, 0)
-    write_text("Hello, World!")
-    water = ser_water.readline().decode('utf-8').strip()
-    message_water = str(water)
-    publish_message(mqtt_water, message_water)
+
+    while True:
+
+        # get waterlevel and publish
+        water = ser_water.readline().decode('utf-8').strip()
+        message_water = str(water)
+        publish_message(mqtt_water, message_water)
+
+        time_now = time.time()
+
+        if int(water) < 10: #ferry is available
+            clear_display()
+            move_cursor(0, 0)
+            write_text("Faehre fahrt in XX Minuten.")
+        else:
+            clear_display()
+            move_cursor(0, 0)
+            write_text("Faehre fahrt momentan nicht.")
+        move_cursor(0, 1)
+        write_text(display_message)
+
+
     pass
 
 
@@ -119,5 +150,17 @@ if __name__ == "__main__":
         print(f"An unexpected error occurred: {e}")
     
     finally:
-        #cleanup
+    # Close the database connection
+        if connection:
+            connection.close()
+            print("__________________________\nPostgreSQL connection closed.")
+        clear_display()
+        time.sleep(0.5)
+        ser_water.close()
+        ser_display.close()
+        print("__________________________\nArduino connection closed.")
+        terminate_flag.set()
+        mqtt_thread.join()
+        print("__________________________\nMQTT client terminated.")
+        time.sleep(1)
         pass
