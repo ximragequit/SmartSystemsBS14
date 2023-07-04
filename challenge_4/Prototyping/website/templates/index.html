@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <title>Fährt sie?</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
+    <meta charset="UTF-8" />
+    <title>Fährt Sie?</title>
+    <script type="text/javascript" src="../static/script.js"></script>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="shortcut icon" href="../static/image/73.ico" />
   </head>
   <body>
-    <h1>Test</h1>
+    <header>
+      <div id="navbar">
+        <nav id="navbar-links">
+          <a href="#">About</a>
+          <a href="#">Die Fähren</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div id="fahrstatus" class="fahrstatus">
+        <div class="fahrstatus-text">
+          <span class="content">Die Fähre</span>
+          <span class="number-73">73</span>
+          <span class="content">fährt</span>
+        </div>
+      </div>
+      <div class="map">
+        <p>Map</p>
+      </div>
+      <div class="fahrplan">
+        <p>Fahrplan</p>
+      </div>
+      <div class="statistic">
+        <p>Statistic</p>
+      </div>
+    </main>
+
+    <footer>
+      <div id="Symbols"></div>
+      <div id="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">HADAG</a>
+        <a href="#">feahrtsie</a>
+        <a href="#">I-Tech</a>
+      </div>
+    </footer>
   </body>
 </html>
