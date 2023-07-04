@@ -250,17 +250,37 @@ CREATE TABLE IF NOT EXISTS WaterLevel (
   WaterLevel FLOAT
 );
 
--- Create Schedule table
-CREATE TABLE IF NOT EXISTS Schedule (
-  Schedule_ID INT PRIMARY KEY,
-  DepartureTime TIME
+-- Create Dock table
+CREATE TABLE IF NOT EXISTS Dock (
+  Dock_ID INT PRIMARY KEY,
+  DockName TEXT,
+  GPSCoordinates TEXT
 );
 
  -- Create FerryLine 
 CREATE TABLE IF NOT EXISTS FerryLine (
   FerryLine_ID INT Primary Key,
-  Line TEXT
-  
+  Line INT
+);
+
+INSERT INTO FerryLine (FerryLine_ID, Line)
+VALUES
+  (1, 61),
+  (2, 62),
+  (3, 64),
+  (4, 68),
+  (5, 72),
+  (6, 73),
+  (7, 75);
+
+-- Create Schedule table
+CREATE TABLE IF NOT EXISTS Schedule (
+  Schedule_ID INT PRIMARY KEY,
+  DepartureTime TIME,
+  FerryLine_ID INT,
+  Dock_ID INT,
+  FOREIGN KEY (FerryLine_ID) REFERENCES FerryLine(FerryLine_ID),
+  FOREIGN KEY (Dock_ID) REFERENCES Dock(Dock_ID)
 );
 
 -- Create FerryLine_Ferry table
@@ -293,12 +313,6 @@ CREATE TABLE IF NOT EXISTS Outage (
   FOREIGN KEY (Trip_ID) REFERENCES Trip(Trip_ID)
 );
 
--- Create Dock table
-CREATE TABLE IF NOT EXISTS Dock (
-  Dock_ID INT PRIMARY KEY,
-  DockName TEXT,
-  GPSCoordinates TEXT
-);
 -- Create Dock_FerryLine
 CREATE TABLE IF NOT EXISTS Dock_FerryLine (
   Dock_ID INT,
@@ -307,4 +321,4 @@ CREATE TABLE IF NOT EXISTS Dock_FerryLine (
   FOREIGN KEY (Dock_ID) REFERENCES Dock(Dock_ID),
   FOREIGN KEY (FerryLine_ID) REFERENCES FerryLine_Ferry(FerryLine_ID)
 );
-  
+
