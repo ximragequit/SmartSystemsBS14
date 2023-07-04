@@ -4010,3 +4010,15 @@ INFO 23.07.03 12:59:39
 ______________________
 INFO 23.07.03 12:59:39 
 127.0.0.1 - - [03/Jul/2023 12:59:39] "[36mGET /favicon.ico HTTP/1.1[0m" 304 -
+______________________
+INFO 23.07.04 08:31:33 
+ * Detected change in 'C:\\Users\\tmarkmann\\Documents\\I-Tech\\Design-Thinking-Workshop\\SmartSystemsBS14\\challenge_4\\Prototyping\\app.py', reloading
+______________________
+INFO 23.07.04 08:31:34 
+ * Restarting with stat
+______________________
+INFO 23.07.04 10:21:22 
+ * Restarting with stat
+______________________
+INFO 23.07.04 10:21:48 
+ * Restarting with stat
