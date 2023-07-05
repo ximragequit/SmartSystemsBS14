@@ -122,10 +122,11 @@ def get_minutes():
     cursor = db.cursor()
 
     cursor.execute(f"SELECT MIN(DepartureTime) FROM Schedule WHERE DepartureTime >= '{datetime.now().strftime('%H:%M:%S')}'")
-    cursor.fetchone()[0]
+    result = cursor.fetchone()[0]
     cursor.close()
 
     db.close()
+    return result
 
 def clear_display():
     ser_display.write(b'C')
