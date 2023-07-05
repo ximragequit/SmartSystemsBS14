@@ -117,6 +117,20 @@ def db_insert_data(table, data):
 
 	db.close()
 
+def clear_display():
+    ser_display.write(b'C')
+
+def move_cursor(column, row):
+    ser_display.write(b'M')
+    ser_display.write(str(column).encode())
+    ser_display.write(b' ')
+    ser_display.write(str(row).encode())
+
+def write_text(text):
+    ser_display.write(b'W')
+    ser_display.write(text.encode())
+    ser_display.write(b'\n')
+
 def main():
 	# main code
 	# connect to Database
