@@ -121,7 +121,7 @@ def get_minutes():
     db = get_db()
     cursor = db.cursor()
 
-    cursor.execute(f"SELECT MIN(DepartureTime) FROM Schedule WHERE DepartureTime >= {datetime.now().strftime('%H:%M:%S')}")
+    cursor.execute(f"SELECT MIN(DepartureTime) FROM Schedule WHERE DepartureTime >= '{datetime.now().strftime('%H:%M:%S')}'")
     cursor.fetchone()[0]
     cursor.close()
 
