@@ -121,29 +121,46 @@ def get_minutes():
     db = get_db()
     cursor = db.cursor()
 
-    current_time = datetime.now().time()
-
     # SQL-Abfrage ausführen
     cursor.execute(
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine_ID = 73
+        WHERE FerryLine_ID = 6
         AND Dock_ID = 16
-        AND DepartureTime > %s
         ORDER BY DepartureTime
-        LIMIT 1
-        """,
-        (current_time,)
+        """
     )
 
-    # Ergebnis abrufen
-    result = cursor.fetchone()
+    # Ergebnisse abrufen
+    results = cursor.fetchall()
+
+    # Liste der Abfahrtszeiten erstellen
+    departure_times = [row[0] for row in results]
+
+    current_time = datetime.now().time()
+
+    # Nächstgrößere Abfahrtszeit finden
+    next_departure_time = None
+    for departure_time in departure_times:
+        if departure_time > current_time:
+            next_departure_time = departure_time
+            break
 
     cursor.close()
-
     db.close()
-    return result[0]
+    # Berechnung der Differenz in Minuten
+    if next_departure_time is not None:
+        # Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
+        current_datetime = datetime.combine(datetime.now().date(), current_time)
+        next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
+
+        # Differenz berechnen
+        time_difference = next_departure_datetime - current_datetime
+
+        # Differenz in Minuten extrahieren
+        time_difference_minutes = time_difference.total_seconds() // 60
+    return time_difference_minutes
 
 def clear_display():
     ser_display.write(b'C')
@@ -181,7 +198,7 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		minutes = get_minutes()
+		minutes_left = int(get_minutes())
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
@@ -198,7 +215,7 @@ def main():
 			time.sleep(0.25)
 			move_cursor(0, 1)
 			time.sleep(0.25)
-			write_text(minutes + " Minuten.")
+			write_text(str(minutes_left) + " Minuten.")
 			time.sleep(0.25)
 		else:
 			time.sleep(0.25)
