@@ -127,11 +127,11 @@ def main():
 
 	while True:
 		# datetime object containing current date and time
-        now = datetime.now()
+		now = datetime.now()
 
-        print("now =", now)
-        # dd/mm/YY H:M:S
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+		print("now =", now)
+		# dd/mm/YY H:M:S
+		dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
 		# get waterlevel and publish
 		water_ID = db_get_next_pk_id("WaterLevel")
