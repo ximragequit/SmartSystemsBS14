@@ -169,6 +169,7 @@ def main():
 			write_text("XX Minuten.")
 			time.sleep(0.5)
 		else:
+			clear_display()
 			time.sleep(0.5)
 			move_cursor(0, 0)
 			time.sleep(0.5)
