@@ -160,8 +160,7 @@ def get_minutes():
 
         # Differenz in Minuten extrahieren
         time_difference_minutes = time_difference.total_seconds() // 60
-    print(time_difference_minutes)
-    #return results[0]
+    return time_difference_minutes
 
 def clear_display():
     ser_display.write(b'C')
@@ -199,7 +198,7 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		get_minutes()
+		minutes_left = get_minutes()
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
@@ -216,7 +215,7 @@ def main():
 			time.sleep(0.25)
 			move_cursor(0, 1)
 			time.sleep(0.25)
-			#write_text(minutes + " Minuten.")
+			write_text(minutes + " Minuten.")
 			time.sleep(0.25)
 		else:
 			time.sleep(0.25)
