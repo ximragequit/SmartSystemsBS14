@@ -130,7 +130,7 @@ def get_minutes():
         FROM Schedule
         WHERE FerryLine_ID = 6
         AND Dock_ID = 16
-        AND DepartureTime > %s
+        AND DepartureTime > %s::time
         ORDER BY DepartureTime
         LIMIT 1
         """,
