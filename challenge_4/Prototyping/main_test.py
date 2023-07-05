@@ -148,9 +148,10 @@ def get_minutes():
             break
 
     cursor.close()
-
     db.close()
-    print(next_departure_time)
+
+    minutes_left = next_departure_time-current_time
+    print(minutes_left)
     #return results[0]
 
 def clear_display():
