@@ -164,7 +164,7 @@ def main():
 			time.sleep(0.5)
 			move_cursor(0, 0)
 			time.sleep(0.5)
-			write_text("Faehre fahrt in") # depending on schedule from database
+			write_text("Faehre faehrt in") # depending on schedule from database
 			time.sleep(0.5)
 			move_cursor(0, 1)
 			time.sleep(0.5)
