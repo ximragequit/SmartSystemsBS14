@@ -180,9 +180,6 @@ if __name__ == "__main__":
 	
 	finally:
 	# Close the database connection
-		if connection:
-			connection.close()
-			print("__________________________\nPostgreSQL connection closed.")
 		clear_display()
 		time.sleep(0.5)
 		ser_water.close()
