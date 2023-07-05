@@ -215,7 +215,7 @@ def main():
 			time.sleep(0.25)
 			move_cursor(0, 1)
 			time.sleep(0.25)
-			write_text(minutes + " Minuten.")
+			write_text(minutes_left + " Minuten.")
 			time.sleep(0.25)
 		else:
 			time.sleep(0.25)
