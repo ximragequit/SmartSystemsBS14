@@ -8,37 +8,27 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 void setup() {
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
-
+  lcd.clear();
+  lcd.print("Arduino LCD");
+  Serial.begin(9600);  // Start Serial communication
 }
+
 void loop() {
   if (Serial.available() > 0) {
     char command = Serial.read();
 
     // Befehle vom Raspberry Pi verarbeiten
     if (command == 'C') {
-      clearDisplay();
+      lcd.clear();
     }
     else if (command == 'M') {
-      moveCursor();
+      int column = Serial.parseInt();
+      int row = Serial.parseInt();
+      lcd.setCursor(column, row);
     }
     else if (command == 'W') {
-      writeText();
+      String text = Serial.readStringUntil('\n');
+      lcd.print(text);
     }
   }
-}
-
-void clearDisplay() {
-  lcd.clear();
-}
-
-void moveCursor() {
-  int column = Serial.parseInt();
-  int row = Serial.parseInt();
-
-  lcd.setCursor(column, row);
-}
-
-void writeText() {
-  String text = Serial.readStringUntil('\n');
-  lcd.print(text);
 }

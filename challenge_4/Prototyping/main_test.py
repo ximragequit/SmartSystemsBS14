@@ -37,7 +37,7 @@ db_pw = 'testing1234'
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
 ferry_availability = True
-max_water_level = 10
+max_water_level = 275
 
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
@@ -117,15 +117,56 @@ def db_insert_data(table, data):
 
 	db.close()
 
+def get_minutes():
+    db = get_db()
+    cursor = db.cursor()
+
+    current_time = datetime.now().time()
+
+    # SQL-Abfrage ausführen
+    cursor.execute(
+        """
+        SELECT DepartureTime
+        FROM Schedule
+        WHERE FerryLine_ID = 73
+        AND Dock_ID = 16
+        AND DepartureTime > %s
+        ORDER BY DepartureTime
+        LIMIT 1
+        """,
+        (current_time,)
+    )
+
+    # Ergebnis abrufen
+    result = cursor.fetchone()
+
+    cursor.close()
+
+    db.close()
+    return result[0]
+
+def clear_display():
+    ser_display.write(b'C')
+
+def move_cursor(column, row):
+    ser_display.write(b'M')
+    ser_display.write(str(column).encode())
+    ser_display.write(b' ')
+    ser_display.write(str(row).encode())
+
+def write_text(text):
+    ser_display.write(b'W')
+    ser_display.write(text.encode())
+    ser_display.write(b'\n')
+
 def main():
 	# main code
 	# connect to Database
 
 	start_mqtt_client()
-
-	clear_display()
-
 	while True:
+		time.sleep(0.5)
+		clear_display()
 		# datetime object containing current date and time
 		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
 
@@ -140,6 +181,8 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
+		minutes = get_minutes()
+
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
 		else:
@@ -148,14 +191,25 @@ def main():
 		publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
+			time.sleep(0.25)
 			move_cursor(0, 0)
-			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
+			time.sleep(0.25)
+			write_text("Faehre faehrt in") # depending on schedule from database
+			time.sleep(0.25)
+			move_cursor(0, 1)
+			time.sleep(0.25)
+			write_text(minutes + " Minuten.")
+			time.sleep(0.25)
 		else:
+			time.sleep(0.25)
 			move_cursor(0, 0)
-			write_text("Faehre fahrt momentan nicht.")
-		move_cursor(0, 1)
-		write_text(display_message)
-
+			time.sleep(0.25)
+			write_text("Faehre fahrt")
+			time.sleep(0.25)
+			move_cursor(0, 1)
+			time.sleep(0.25)
+			write_text("momentan nicht!")
+			time.sleep(0.25)
 
 	pass
 
