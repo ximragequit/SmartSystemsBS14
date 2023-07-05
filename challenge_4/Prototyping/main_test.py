@@ -120,7 +120,7 @@ def main():
 	# main code
 	# connect to Database
 
-    start_mqtt_client()
+	start_mqtt_client()
 
 	clear_display()
 
