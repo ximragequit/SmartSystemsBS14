@@ -183,7 +183,7 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		#minutes = get_minutes()
+		get_minutes()
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
