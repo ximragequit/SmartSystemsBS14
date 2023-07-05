@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Fährt Sie?</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/2.18.8/mqtt.min.js"></script>
+
+  <script>
+    // MQTT-Verbindung herstellen
+    var client = mqtt.connect('mqtt://192.168.5.59:9001', {
+      clientId: 'clientId',
+      username: 'admin',
+      password: 'testing1234'
+    });
+
+    // Callback-Funktion für den Verbindungsaufbau
+    client.on('connect', function () {
+      console.log('Verbunden mit dem MQTT-Broker');
+
+      // Thema abonnieren
+      client.subscribe('topic/availability/73');
+    });
+
+    // Callback-Funktion für den Empfang von Nachrichten
+    client.on('message', function (topic, message) {
+      console.log('Nachricht empfangen:', message.toString());
+
+      // Hier kannst du den Inhalt der Nachricht verarbeiten und entsprechend die Website aktualisieren
+      var availability = message.toString();
+      var messageElement = document.getElementById('message');
+      if (availability === 'True') {
+        messageElement.innerHTML = 'Ja! Die Fähre 73 fährt derzeit';
+      } else {
+        messageElement.innerHTML = 'Die Fähre 73 fährt derzeit nicht';
+      }
+    });
+
+    // Callback-Funktion für den Verbindungsverlust
+    client.on('offline', function () {
+      console.log('Verbindung zum MQTT-Broker verloren');
+    });
+  </script>
+</head>
+
+<body>
+  <div class="jumbotron text-center" style="margin-bottom: 0">
+    <h1 id="message"></h1>
+  </div>
+</body>
+
+</html>

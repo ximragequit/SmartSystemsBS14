@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/3.3.1/mqtt.min.js"></script>
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
@@ -24,8 +26,27 @@
 
   <body>
     <div class="jumbotron text-center" style="margin-bottom: 0">
-      <h1>Ja! Die Fähre 73 fährt derzeit</h1>
-    </div>
+      <h1 id="message">
+      <script>
+      var broker = '192.168.5.59';
+      var client = mqtt.connect(broker);
+      var topic = 'topic/aivailibility/73';
+      client.on('message', function(topic, message) {
+        // Nachricht empfangen, HTML-Inhalt aktualisieren
+        var availability = message.toString();
+        var messageElement = document.getElementById('message');
+        if (availability === 'true') {
+          messageElement.innerHTML = 'Ja! Die Fähre 73 fährt derzeit';
+        } else {
+          messageElement.innerHTML = 'Die Fähre 73 fährt derzeit nicht';
+        }
+      });
+      client.on('connect', function() {
+        client.subscribe(topic);
+      });
+    </script>
+  </h1>
+</div>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
       <a class="navbar-brand navbar-logo" href="#">Die Fähren</a>
       <button
