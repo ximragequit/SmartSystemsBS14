@@ -138,13 +138,19 @@ def get_minutes():
     # Liste der Abfahrtszeiten erstellen
     departure_times = [row[0] for row in results]
 
-    # Ausgabe der Abfahrtszeiten
+    current_time = datetime.now().time()
+
+    # Nächstgrößere Abfahrtszeit finden
+    next_departure_time = None
     for departure_time in departure_times:
-        print(departure_time)
+        if departure_time > current_time:
+            next_departure_time = departure_time
+            break
 
     cursor.close()
 
     db.close()
+    print(next_departure_time)
     #return results[0]
 
 def clear_display():
