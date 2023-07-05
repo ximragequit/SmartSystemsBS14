@@ -25,6 +25,7 @@ mqtt_water = "topic/water"
 mqtt_gps = "topic/gps"
 mqtt_display = "topic/display"
 mqtt_availability = "topic/availability"
+mqtt_availability_73 = "topic/availability/73"
 mqtt_next_ferry = "topic/next_ferry"
 
 db_host = 'localhost'
@@ -125,13 +126,17 @@ def main():
 	clear_display()
 
 	while True:
-		time_now = time.time()
+		# datetime object containing current date and time
+		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
+
+		print("now =", now)
 
 		# get waterlevel and publish
 		water_ID = db_get_next_pk_id("WaterLevel")
 		water = ser_water.readline().decode('utf-8').strip()
-		water_data = (int(water_ID), str(time_now), float(water))
+		water_data = (int(water_ID), str(now), float(water))
 		db_insert_data('WaterLevel',water_data)
+		print(water)
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
@@ -140,14 +145,12 @@ def main():
 		else:
 			ferry_availability = False
 
-		publish_message(mqtt_availability, ferry_availability)
+		publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
-			clear_display()
 			move_cursor(0, 0)
 			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
 		else:
-			clear_display()
 			move_cursor(0, 0)
 			write_text("Faehre fahrt momentan nicht.")
 		move_cursor(0, 1)
