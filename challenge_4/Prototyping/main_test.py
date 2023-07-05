@@ -127,7 +127,7 @@ def main():
 
 	while True:
 		# datetime object containing current date and time
-		now = datetime.now()
+		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
 
 		print("now =", now)
 
