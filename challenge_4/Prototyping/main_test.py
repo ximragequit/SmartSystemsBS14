@@ -121,30 +121,31 @@ def get_minutes():
     db = get_db()
     cursor = db.cursor()
 
-    current_time = datetime.now().time()
-    print(current_time)
-
     # SQL-Abfrage ausführen
     cursor.execute(
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine_ID = 6
-        AND Dock_ID = 16
-        AND DepartureTime > %s::time
+        WHERE FerryLine = 73
+        AND DockID = 16
         ORDER BY DepartureTime
-        LIMIT 1
-        """,
-        (current_time,)
+        """
     )
 
-    # Ergebnis abrufen
-    result = cursor.fetchone()
+    # Ergebnisse abrufen
+    results = cursor.fetchall()
+
+    # Liste der Abfahrtszeiten erstellen
+    departure_times = [row[0] for row in results]
+
+    # Ausgabe der Abfahrtszeiten
+    for departure_time in departure_times:
+        print(departure_time)
 
     cursor.close()
 
     db.close()
-    return result[0]
+    #return results[0]
 
 def clear_display():
     ser_display.write(b'C')
@@ -182,7 +183,7 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		minutes = get_minutes()
+		#minutes = get_minutes()
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
@@ -199,7 +200,7 @@ def main():
 			time.sleep(0.25)
 			move_cursor(0, 1)
 			time.sleep(0.25)
-			write_text(minutes + " Minuten.")
+			#write_text(minutes + " Minuten.")
 			time.sleep(0.25)
 		else:
 			time.sleep(0.25)
