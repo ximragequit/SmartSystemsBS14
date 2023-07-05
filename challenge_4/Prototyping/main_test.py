@@ -137,6 +137,8 @@ def main():
 
 	start_mqtt_client()
 	while True:
+		time.sleep(0.5)
+		clear_display()
 		# datetime object containing current date and time
 		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
 
@@ -170,15 +172,13 @@ def main():
 			time.sleep(0.5)
 		else:
 			time.sleep(0.5)
-			clear_display()
-			time.sleep(0.5)
 			move_cursor(0, 0)
 			time.sleep(0.5)
 			write_text("Faehre fahrt")
 			time.sleep(0.5)
 			move_cursor(0, 1)
 			time.sleep(0.5)
-			write_text("momentan nicht.")
+			write_text("momentan nicht!")
 			time.sleep(0.5)
 
 	pass
