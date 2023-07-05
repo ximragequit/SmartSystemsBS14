@@ -162,19 +162,22 @@ def main():
 			time.sleep(0.5)
 			move_cursor(0, 0)
 			time.sleep(0.5)
-			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
+			write_text("Faehre fahrt in") # depending on schedule from database
+			time.sleep(0.5)
+			move_cursor(0, 1)
+			time.sleep(0.5)
+			write_text("XX Minuten.")
 			time.sleep(0.5)
 		else:
 			time.sleep(0.5)
 			move_cursor(0, 0)
 			time.sleep(0.5)
-			write_text("Faehre fahrt momentan nicht.")
+			write_text("Faehre fahrt")
 			time.sleep(0.5)
-		move_cursor(0, 1)
-		time.sleep(0.5)
-		write_text(display_message)
-		time.sleep(0.5)
-
+			move_cursor(0, 1)
+			time.sleep(0.5)
+			write_text("momentan nicht.")
+			time.sleep(0.5)
 
 	pass
 
