@@ -16,6 +16,7 @@ logging.basicConfig(
 
 ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
 ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
+# useless comment
 
 mqtt_broker = "localhost"
 mqtt_port = 1883
