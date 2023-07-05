@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PostgreSQL-Abfrage mit PHP</title>
+        <title>PostgreSQL-Abfrage mit PHP</title>
 </head>
 <body>
 <h1>Test</h1>
+
 <?php
 error_reporting(-1);
 ini_set('display_errors','On');
-$host = '127.0.0.1';
-$dbname = 'ferry';
-$user = 'admin_hs';
-$password = 'Testing1234';
 
-$dsn = "pgsql:host=$host;dbname=$dbname;user=$user;password=$password";
-$pdo = new PDO($dsn);
-// SQL-Abfrage ausführen
-$sql = 'SELECT * FROM vent_stat';
-$stmt = $pdo->query($sql);
-
-// Ergebnisse ausgeben
-echo '<table>';
-echo '<tr><th>ID</th><th>Name</th><th>Status</th><th>Zeit</th></tr>';
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo '<tr>';
-        echo '<td>' . $row['vent_stat_id'] . '</td>';
-        echo '<td>' . $row['vent_id'] . '</td>';
-        echo '<td>' . $row['vent_status'] . '</td>';
-        echo '<td>' . $row['zeit'] . '</td>';
-        echo '</tr>';
+function psql($sqlQuery, $echo1) {
+        $host = '127.0.0.1';
+        $dbname = 'ferry';
+        $user = 'admin_hs';
+        $password = 'Testing1234';
+        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare($sqlQuery);
+        $stmt->execute();
+        $information = $stmt->fetchColumn();
+        if ($echo1 == 1) {
+                echo $information;
+        }
+        return $information; // Gib den Wert zurück
 }
-echo '</table>';
 
-// Verbindung schließen
-$pdo = null;
+psql("SELECT dockname FROM dock where dock_id = 2;", 1);
 ?>
+<p>Der Captain John Smith
+<?php
+$availability = psql("SELECT availability FROM captain where captain_id = 1;", 0);
+echo $availability;
+if ($availability == true) {
+        echo "ist abwesend";
+} else {
+        echo "ist anwesend";
+}
+?></p>
+
 </body>
 </html>
