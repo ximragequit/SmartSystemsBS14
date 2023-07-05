@@ -247,7 +247,7 @@ VALUES
 -- Create WaterLevel table
 CREATE TABLE IF NOT EXISTS WaterLevel (
   WaterLevel_ID INT PRIMARY KEY,
-  Timestamp DATE,
+  Timestamp VARCHAR(50),
   WaterLevel FLOAT
 );
 
@@ -471,7 +471,7 @@ CREATE TABLE IF NOT EXISTS Trip (
 CREATE TABLE IF NOT EXISTS Outage (
   Outage_ID INT PRIMARY KEY,
   Trip_ID INT,
-  OutageDate DATE,
+  OutageDate VARCHAR(50),
   FOREIGN KEY (Trip_ID) REFERENCES Trip(Trip_ID)
 );
 
@@ -496,7 +496,7 @@ VALUES
 CREATE TABLE IF NOT EXISTS Location (
   Location_ID INT,
   GPS_Coordinates TEXT,
-  timestamp DATE,
+  timestamp VARCHAR(50),
   Ferry_ID INT,
   FOREIGN KEY (Ferry_ID) REFERENCES Ferry(Ferry_ID)
 );
