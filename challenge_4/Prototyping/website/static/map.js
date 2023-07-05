@@ -3,7 +3,7 @@ var map = L.map("map");
 if (!map.hasLayer()) {
   // Initialize the map
   // map.setView([53.5349, 9.9946], 13);
-  
+
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://carto.com/">Carto</a>',
   subdomains: 'abcd',
@@ -36,5 +36,3 @@ if (!map.hasLayer()) {
     }
   ).addTo(map);
 }
-
-
