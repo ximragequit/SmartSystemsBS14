@@ -491,3 +491,12 @@ VALUES
   (14,6,2),
   (15,6,3),
   (16,6,4);
+  
+-- Create Lockation
+CREATE TABLE IF NOT EXISTS Location (
+  Location_ID INT,
+  GPS_Coordinates TEXT,
+  timestamp DATE,
+  Ferry_ID INT,
+  FOREIGN KEY (Ferry_ID) REFERENCES Ferry(Ferry_ID)
+);
