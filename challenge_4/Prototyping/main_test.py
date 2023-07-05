@@ -149,9 +149,18 @@ def get_minutes():
 
     cursor.close()
     db.close()
+    # Berechnung der Differenz in Minuten
+    if next_departure_time is not None:
+        # Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
+        current_datetime = datetime.combine(datetime.now().date(), current_time)
+        next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
 
-    minutes_left = next_departure_time-current_time
-    print(minutes_left)
+        # Differenz berechnen
+        time_difference = next_departure_datetime - current_datetime
+
+        # Differenz in Minuten extrahieren
+        time_difference_minutes = time_difference.total_seconds() // 60
+    print(time_difference_minutes)
     #return results[0]
 
 def clear_display():
