@@ -25,6 +25,7 @@ mqtt_water = "topic/water"
 mqtt_gps = "topic/gps"
 mqtt_display = "topic/display"
 mqtt_availability = "topic/availability"
+mqtt_availability_73 = "topic/availability/73"
 mqtt_next_ferry = "topic/next_ferry"
 
 db_host = 'localhost'
@@ -140,7 +141,7 @@ def main():
 		else:
 			ferry_availability = False
 
-		publish_message(mqtt_availability, ferry_availability)
+		publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
 			clear_display()
