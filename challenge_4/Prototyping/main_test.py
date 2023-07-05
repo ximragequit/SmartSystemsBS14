@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 
 logging.basicConfig(
 	format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
-	filename = F'.\challenge_4\Prototyping\logs\{datetime.today().strftime("%y.%m.%d")}_py.log', 
+	filename = F'./challenge_4/Prototyping/logs/{datetime.today().strftime("%y.%m.%d")}_py.log', 
 	encoding = 'utf-8', 
 	level = logging.DEBUG,
 	datefmt='%y.%m.%d %H:%M:%S'
@@ -120,7 +120,7 @@ def main():
 	# main code
 	# connect to Database
 
-    start_mqtt_client()
+	start_mqtt_client()
 
 	clear_display()
 
