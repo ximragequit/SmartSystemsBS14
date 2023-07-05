@@ -136,7 +136,7 @@ def main():
 	# connect to Database
 
 	start_mqtt_client()
-
+	time.sleep(1)
 	clear_display()
 	time.sleep(0.5)
 	move_cursor(0,0)
