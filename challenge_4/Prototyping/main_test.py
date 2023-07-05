@@ -128,8 +128,8 @@ def get_minutes():
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine = 73
-        AND DockID = 16
+        WHERE FerryLine_ID = 73
+        AND Dock_ID = 16
         AND DepartureTime > %s
         ORDER BY DepartureTime
         LIMIT 1
