@@ -30,11 +30,11 @@ mqtt_next_ferry = "topic/next_ferry"
 
 terminate_flag = threading.Event()
 
-db_host = '10.8.0.1'
+db_host = 'localhost'
 db_port = '5432'
-db_database = 'ferry'
-db_usr = 'admin_hs'
-db_pw = 'Testing1234'
+db_database = 'postgres'
+db_usr = 'postgres'
+db_pw = 'testing1234'
 
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
@@ -44,7 +44,6 @@ max_water_level = 10
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
 	print("Connected to MQTT broker: " + mqtt_broker)
-	client.subscribe(mqtt_gps)
 
 # Callback function for the on_message event
 def on_message(client, userdata, msg):

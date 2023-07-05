@@ -4,7 +4,6 @@ import psycopg2
 import logging
 from datetime import datetime
 import paho.mqtt.client as mqtt
-import threading
 
 logging.basicConfig(
 	format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
@@ -28,13 +27,11 @@ mqtt_display = "topic/display"
 mqtt_availability = "topic/availability"
 mqtt_next_ferry = "topic/next_ferry"
 
-terminate_flag = threading.Event()
-
-db_host = '10.8.0.1'
+db_host = 'localhost'
 db_port = '5432'
-db_database = 'ferry'
-db_usr = 'admin_hs'
-db_pw = 'Testing1234'
+db_database = 'postgres'
+db_usr = 'postgres'
+db_pw = 'testing1234'
 
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
@@ -44,33 +41,13 @@ max_water_level = 10
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
 	print("Connected to MQTT broker: " + mqtt_broker)
-	client.subscribe(mqtt_gps)
-
-# Callback function for the on_message event
-def on_message(client, userdata, msg):
-	global manual_mode, manual_level, manual_vent
-	print("Received message: " + str(msg.payload.decode()))
-	if msg.topic == mqtt_gps:
-		actual_coordinates = (str(msg.payload.decode()))
-	elif msg.topic == mqtt_display:
-		display_message = (str(msg.payload.decode()))
-	elif msg.topic == mqtt_availability:
-		if (str(msg.payload.decode())) == 'True':
-			ferry_availability = True
-		elif (str(msg.payload.decode())) == 'False':
-			ferry_availability = False
 
 # Function to start the MQTT client
 def start_mqtt_client():
 	client = mqtt.Client()
 	client.username_pw_set(mqtt_usr, mqtt_passw)
 	client.on_connect = on_connect
-	client.on_message = on_message
 	client.connect(mqtt_broker, mqtt_port, 60)
-
-	while not terminate_flag.is_set():
-		client.loop()
-		time.sleep(0.1)
 
 	client.disconnect()
 
@@ -143,8 +120,7 @@ def main():
 	# main code
 	# connect to Database
 
-	mqtt_thread = threading.Thread(target=start_mqtt_client)
-	mqtt_thread.start()
+    start_mqtt_client()
 
 	clear_display()
 
@@ -212,8 +188,6 @@ if __name__ == "__main__":
 		ser_water.close()
 		ser_display.close()
 		print("__________________________\nArduino connection closed.")
-		terminate_flag.set()
-		mqtt_thread.join()
 		print("__________________________\nMQTT client terminated.")
 		time.sleep(1)
 		pass
