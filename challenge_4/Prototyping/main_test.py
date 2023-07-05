@@ -25,6 +25,7 @@ mqtt_water = "topic/water"
 mqtt_gps = "topic/gps"
 mqtt_display = "topic/display"
 mqtt_availability = "topic/availability"
+mqtt_next_ferry = "topic/next_ferry"
 
 terminate_flag = threading.Event()
 
