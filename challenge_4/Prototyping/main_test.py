@@ -128,7 +128,7 @@ def get_minutes():
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine_ID = 73
+        WHERE FerryLine_ID = 6
         AND Dock_ID = 16
         AND DepartureTime > %s
         ORDER BY DepartureTime
