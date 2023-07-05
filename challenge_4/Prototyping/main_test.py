@@ -37,7 +37,7 @@ db_pw = 'testing1234'
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
 ferry_availability = True
-max_water_level = 10
+max_water_level = 275
 
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
@@ -138,7 +138,8 @@ def main():
 	start_mqtt_client()
 
 	clear_display()
-
+	move_cursor(0,0)
+	write_text("Hallo Welt!")
 	while True:
 		# datetime object containing current date and time
 		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
@@ -161,14 +162,14 @@ def main():
 
 		publish_message(mqtt_availability_73, ferry_availability)
 
-		if ferry_availability:
-			move_cursor(0, 0)
-			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
-		else:
-			move_cursor(0, 0)
-			write_text("Faehre fahrt momentan nicht.")
-		move_cursor(0, 1)
-		write_text(display_message)
+#		if ferry_availability:
+#			move_cursor(0, 0)
+#			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
+#		else:
+#			move_cursor(0, 0)
+#			write_text("Faehre fahrt momentan nicht.")
+#		move_cursor(0, 1)
+#		write_text(display_message)
 
 
 	pass
