@@ -117,7 +117,7 @@ def db_insert_data(table, data):
 
 	db.close()
 
-def get_minutes()
+def get_minutes():
     db = get_db()
     cursor = db.cursor()
 
