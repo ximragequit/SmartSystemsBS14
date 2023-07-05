@@ -136,13 +136,6 @@ def main():
 	# connect to Database
 
 	start_mqtt_client()
-	time.sleep(1)
-	clear_display()
-	time.sleep(0.5)
-	move_cursor(0,0)
-	time.sleep(0.5)
-	write_text("Hallo Welt!")
-	time.sleep(0.5)
 	while True:
 		# datetime object containing current date and time
 		now = datetime.now().strftime("%y.%m.%d;%H:%M:%S")
@@ -165,14 +158,22 @@ def main():
 
 		publish_message(mqtt_availability_73, ferry_availability)
 
-#		if ferry_availability:
-#			move_cursor(0, 0)
-#			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
-#		else:
-#			move_cursor(0, 0)
-#			write_text("Faehre fahrt momentan nicht.")
-#		move_cursor(0, 1)
-#		write_text(display_message)
+		if ferry_availability:
+			time.sleep(0.5)
+			move_cursor(0, 0)
+			time.sleep(0.5)
+			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
+			time.sleep(0.5)
+		else:
+			time.sleep(0.5)
+			move_cursor(0, 0)
+			time.sleep(0.5)
+			write_text("Faehre fahrt momentan nicht.")
+			time.sleep(0.5)
+		move_cursor(0, 1)
+		time.sleep(0.5)
+		write_text(display_message)
+		time.sleep(0.5)
 
 
 	pass
