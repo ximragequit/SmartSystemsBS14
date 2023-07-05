@@ -148,11 +148,9 @@ def main():
 		publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
-			clear_display()
 			move_cursor(0, 0)
 			write_text("Faehre fahrt in XX Minuten.") # depending on schedule from database
 		else:
-			clear_display()
 			move_cursor(0, 0)
 			write_text("Faehre fahrt momentan nicht.")
 		move_cursor(0, 1)
