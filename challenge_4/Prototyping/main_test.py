@@ -122,6 +122,7 @@ def get_minutes():
     cursor = db.cursor()
 
     current_time = datetime.now().time()
+    print(current_time)
 
     # SQL-Abfrage ausführen
     cursor.execute(
