@@ -126,13 +126,19 @@ def main():
 	clear_display()
 
 	while True:
-		time_now = time.time()
+		# datetime object containing current date and time
+        now = datetime.now()
+
+        print("now =", now)
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
 		# get waterlevel and publish
 		water_ID = db_get_next_pk_id("WaterLevel")
 		water = ser_water.readline().decode('utf-8').strip()
-		water_data = (int(water_ID), str(time_now), float(water))
+		water_data = (int(water_ID), str(dt_string), float(water))
 		db_insert_data('WaterLevel',water_data)
+		print(water)
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
