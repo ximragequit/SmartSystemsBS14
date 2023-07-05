@@ -117,6 +117,16 @@ def db_insert_data(table, data):
 
 	db.close()
 
+def get_minutes()
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute(f"SELECT MIN(DepartureTime) FROM Schedule WHERE DepartureTime >= {datetime.now().strftime("%H:%M:%S")}")
+    cursor.fetchone()[0]
+    cursor.close()
+
+    db.close()
+
 def clear_display():
     ser_display.write(b'C')
 
@@ -153,6 +163,8 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
+		minutes = get_minutes()
+
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
 		else:
@@ -168,7 +180,7 @@ def main():
 			time.sleep(0.25)
 			move_cursor(0, 1)
 			time.sleep(0.25)
-			write_text("XX Minuten.")
+			write_text(minutes + " Minuten.")
 			time.sleep(0.25)
 		else:
 			time.sleep(0.25)
