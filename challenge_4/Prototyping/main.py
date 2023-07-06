@@ -39,7 +39,6 @@ display_message = "HADAG raus!"
 actual_coordinates = "your mum"
 ferry_availability = True
 max_water_level = 275
-captain_availability = False
 
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
@@ -181,7 +180,7 @@ def mqtt_publish_left_minutes():
 def main():
 	# main code
 	# connect to Database
-
+	captain_availability = False	
 	start_mqtt_client()
 	while True:
 		time.sleep(0.5)
