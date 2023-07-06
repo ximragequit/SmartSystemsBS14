@@ -6,7 +6,7 @@ function test() {
   var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
   var itemPosNewAnimTop = activeItemNewAnim.position();
   var itemPosNewAnimLeft = activeItemNewAnim.position();
-
+  
   $(".hori-selector").css({
     top: itemPosNewAnimTop.top + "px",
     left: itemPosNewAnimLeft.left + "px",
@@ -17,7 +17,7 @@ function test() {
 
 $(document).ready(function () {
   test();
-
+  
   $("#navbarSupportedContent").on("click", "li", function (e) {
     e.preventDefault();
 
@@ -47,9 +47,10 @@ $(document).ready(function () {
 });
 
 function loadContent(url) {
+
   // Hide the navbar and content section
   $("#navbarSupportedContent, #content-section").hide();
-
+  
   $.ajax({
     url: url,
     type: "GET",
@@ -79,6 +80,7 @@ function loadContent(url) {
           // Reset the position of the content section
           $("#content-section").css("left", "");
         });
+
     },
     error: function (xhr, status, error) {
       alert("Error loading the content.");
