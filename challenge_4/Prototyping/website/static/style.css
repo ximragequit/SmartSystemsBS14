@@ -214,11 +214,11 @@ i {
   padding: 10px;
 }
 
-.table-spacing tbody tr:nth-of-type(even) {
+.table-spacing-test tbody tr:nth-of-type(even) {
   background-color: #af8bee;
 }
 
-.table-spacing tbody tr:nth-of-type(odd) {
+.table-spacing-test tbody tr:nth-of-type(odd) {
   background-color: #9672d5;
 }
 

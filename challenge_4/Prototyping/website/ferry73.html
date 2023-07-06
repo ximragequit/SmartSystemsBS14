@@ -7,6 +7,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/2.18.8/mqtt.min.js"></script>
 
+
+    <link rel="icon" type="image/png" href="./static/image/favicon.ico"/>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
@@ -29,41 +31,41 @@
       <h1 id="message">
         <script>
           // MQTT-Verbindung herstellen
-          var client = mqtt.connect('mqtt://192.168.5.59:9001', {
-            clientId: 'clientId',
-            username: 'admin',
-            password: 'testing1234'
+          var client = mqtt.connect("mqtt://192.168.5.59:9001", {
+            clientId: "clientId",
+            username: "admin",
+            password: "testing1234",
           });
-      
+
           // Callback-Funktion für den Verbindungsaufbau
-          client.on('connect', function () {
-            console.log('Verbunden mit dem MQTT-Broker');
-      
+          client.on("connect", function () {
+            console.log("Verbunden mit dem MQTT-Broker");
+
             // Thema abonnieren
-            client.subscribe('topic/availability/73');
+            client.subscribe("topic/availability/73");
           });
-      
+
           // Callback-Funktion für den Empfang von Nachrichten
-          client.on('message', function (topic, message) {
-            console.log('Nachricht empfangen:', message.toString());
-      
+          client.on("message", function (topic, message) {
+            console.log("Nachricht empfangen:", message.toString());
+
             // Hier kannst du den Inhalt der Nachricht verarbeiten und entsprechend die Website aktualisieren
             var availability = message.toString();
-            var messageElement = document.getElementById('message');
-            if (availability === 'True') {
-              messageElement.innerHTML = 'Ja! Die Fähre 73 fährt derzeit';
+            var messageElement = document.getElementById("message");
+            if (availability === "True") {
+              messageElement.innerHTML = "Ja! Die Fähre 73 fährt derzeit";
             } else {
-              messageElement.innerHTML = 'Die Fähre 73 fährt derzeit nicht';
+              messageElement.innerHTML = "Die Fähre 73 fährt derzeit nicht";
             }
           });
-      
+
           // Callback-Funktion für den Verbindungsverlust
-          client.on('offline', function () {
-            console.log('Verbindung zum MQTT-Broker verloren');
+          client.on("offline", function () {
+            console.log("Verbindung zum MQTT-Broker verloren");
           });
         </script>
-  </h1>
-</div>
+      </h1>
+    </div>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
       <a class="navbar-brand navbar-logo" href="#">Die Fähren</a>
       <button
@@ -110,24 +112,48 @@
     </nav>
     <div id="content-section" class="page-content" style="padding-top: 10px">
       <div class="container">
-        <div class="row flex-wrap">
-          <div id="Current-ferries" class="col-md-6 col-sm-12 row justify-content-center col text-center mb-4">
-            <h1>Fähre halten</h1>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <div id="ferry-and-map" class="row">
+          <div
+            id="Current-ferries"
+            class="col-md-6 col-sm-12 row justify-content-center col text-center mt-4"
+          >
+            <h1>Die nächsten Fähren</h1>
+            <p class="text-justify">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+              invidunt ut labore et dolore magna aliquyam erat, sed diam
+              voluptua. At vero eos et accusam et justo duo dolores gubergren,
+              no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            </p>
           </div>
-          <div style="width: 20px;">
-
-          </div>
-          <div id="Map" class="col-md-6 col-sm-12 row justify-content-center col text-center mt-4">
+          <div style="width: 20px"></div>
+          <div
+            id="Map"
+            class="col-md-6 col-sm-12 row justify-content-center col text-center mt-4"
+          >
             <h1>Karte</h1>
             <div id="map"></div>
             <script src="static/map.js"></script>
           </div>
+        </div>
 
-    </div>
-    
-    
-    
+
+        <script>
+          $(window).on("load resize", function () {
+            var screenWidth = $(window).width();
+            var myDiv = $("#ferry-and-map");
+
+            if (screenWidth > 900) {
+              myDiv.addClass("row");
+            } else {
+              myDiv.removeClass("row");
+            }
+          });
+        </script>
 
         <div id="Fahrplan" class="container-fluid">
           <div class="row justify-content-center">
@@ -165,7 +191,7 @@
                   </p>
                 </div>
                 <div class="table-responsive table-scrollable">
-                  <table class="table table-spacing table-full-width">
+                  <table class="table table-spacing table-spacing-test table-full-width">
                     <tbody>
                       <tr>
                         <th>Landungsbrücken (Brücke 1)</th>
@@ -348,7 +374,7 @@
                   </p>
                 </div>
                 <div class="table-responsive table-scrollable">
-                  <table class="table table-spacing table-full-width">
+                  <table class="table table-spacing table-spacing-test table-full-width">
                     <tbody>
                       <tr>
                         <th>Ernst-August-Schleuse</th>
@@ -503,7 +529,7 @@
         </div>
         <div id="Statistics" class="row justify-content-center col text-center">
           <div class="col-md-6">
-            <h1>Statistics</h1>
+            <h1>Statistiken</h1>
             <p>
               Show statistics such as departure delays, skipped stops, and
               non-operational instances.
@@ -517,11 +543,11 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <img src="logo.png" alt="Logo" width="100" height="100" />
-            <p>Company Name</p>
+            <img src="static/image/logo.png" alt="Logo" width="200"/>
+            <p>ferryALeRT</p>
           </div>
           <div class="col-md-4">
-            <h5>Quick Links</h5>
+            <h5>Links</h5>
             <ul class="list-unstyled">
               <li><a href="#">Home</a></li>
               <li><a href="#">About Us</a></li>
@@ -529,8 +555,8 @@
             </ul>
           </div>
           <div class="col-md-4">
-            <h5>Contact Info</h5>
-            <table>
+            <h5>Kontakt Informationen</h5>
+            <table class="table-spacing">
               <tr>
                 <th>Addresse</th>
                 <td>Fährenstraße 1, Hamburg, Deutschland</td>
