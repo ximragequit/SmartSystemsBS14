@@ -26,7 +26,7 @@ mqtt_gps = "topic/gps"
 mqtt_display = "topic/display"
 mqtt_availability = "topic/availability"
 mqtt_availability_73 = "topic/availability/73"
-mqtt_next_ferry = "topic/next_ferry"
+mqtt_next_ferry = "topic/next_ferry/73"
 
 db_host = 'localhost'
 db_port = '5432'
@@ -117,7 +117,7 @@ def db_insert_data(table, data):
 
 	db.close()
 
-def get_minutes():
+def get_minutes(ferryLine_ID,dock_ID):
     db = get_db()
     cursor = db.cursor()
 
@@ -126,8 +126,8 @@ def get_minutes():
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine_ID = 6
-        AND Dock_ID = 16
+        WHERE FerryLine_ID = {ferryLine_ID}
+        AND Dock_ID = {dock_ID}
         ORDER BY DepartureTime
         """
     )
@@ -176,6 +176,12 @@ def write_text(text):
     ser_display.write(text.encode())
     ser_display.write(b'\n')
 
+def mqtt_publish_left_minutes():
+    publish_message(mqtt_next_ferry+"/Landungsbrücken",get_minutes(6,1))
+    publish_message(mqtt_next_ferry+"/Theater im Hafen",get_minutes(6,14))
+    publish_message(mqtt_next_ferry+"/Argentinienbrücke",get_minutes(6,15))
+    publish_message(mqtt_next_ferry+"/Ernst-August-Schleuse",get_minutes(6,16))
+
 def main():
 	# main code
 	# connect to Database
@@ -198,7 +204,9 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		minutes_left = int(get_minutes())
+		minutes_left = int(get_minutes(6,16))
+
+		mqtt_publish_left_minutes()
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
