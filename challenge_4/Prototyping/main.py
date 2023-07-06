@@ -119,63 +119,63 @@ def db_insert_data(table, data):
 	db.close()
 
 def get_minutes(ferryLine_ID, dock_ID):
-    db = get_db()
-    cursor = db.cursor()
+	db = get_db()
+	cursor = db.cursor()
 
-    # SQL-Abfrage mit Platzhaltern ausführen
-    cursor.execute(
-        F"SELECT DepartureTime FROM Schedule WHERE FerryLine_ID = {ferryLine_ID} AND Dock_ID = {dock_ID} ORDER BY DepartureTime"
-    )
+	# SQL-Abfrage mit Platzhaltern ausführen
+	cursor.execute(
+		F"SELECT DepartureTime FROM Schedule WHERE FerryLine_ID = {ferryLine_ID} AND Dock_ID = {dock_ID} ORDER BY DepartureTime"
+	)
 
-    # Ergebnisse abrufen
-    results = cursor.fetchall()
+	# Ergebnisse abrufen
+	results = cursor.fetchall()
 
-    # Liste der Abfahrtszeiten erstellen
-    departure_times = [row[0] for row in results]
+	# Liste der Abfahrtszeiten erstellen
+	departure_times = [row[0] for row in results]
 
-    current_time = datetime.now().time()
+	current_time = datetime.now().time()
 
-    # Nächstgrößere Abfahrtszeit finden
-    next_departure_time = None
-    for departure_time in departure_times:
-        if departure_time > current_time:
-            next_departure_time = departure_time
-            break
+	# Nächstgrößere Abfahrtszeit finden
+	next_departure_time = None
+	for departure_time in departure_times:
+		if departure_time > current_time:
+			next_departure_time = departure_time
+			break
 
-    cursor.close()
-    db.close()
-    # Berechnung der Differenz in Minuten
-    if next_departure_time is not None:
-        # Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
-        current_datetime = datetime.combine(datetime.now().date(), current_time)
-        next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
+	cursor.close()
+	db.close()
+	# Berechnung der Differenz in Minuten
+	if next_departure_time is not None:
+		# Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
+		current_datetime = datetime.combine(datetime.now().date(), current_time)
+		next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
 
-        # Differenz berechnen
-        time_difference = next_departure_datetime - current_datetime
+		# Differenz berechnen
+		time_difference = next_departure_datetime - current_datetime
 
-        # Differenz in Minuten extrahieren
-        time_difference_minutes = time_difference.total_seconds() // 60
-    return int(time_difference_minutes)
+		# Differenz in Minuten extrahieren
+		time_difference_minutes = time_difference.total_seconds() // 60
+	return int(time_difference_minutes)
 
 def clear_display():
-    ser_display.write(b'C')
+	ser_display.write(b'C')
 
 def move_cursor(column, row):
-    ser_display.write(b'M')
-    ser_display.write(str(column).encode())
-    ser_display.write(b' ')
-    ser_display.write(str(row).encode())
+	ser_display.write(b'M')
+	ser_display.write(str(column).encode())
+	ser_display.write(b' ')
+	ser_display.write(str(row).encode())
 
 def write_text(text):
-    ser_display.write(b'W')
-    ser_display.write(text.encode())
-    ser_display.write(b'\n')
+	ser_display.write(b'W')
+	ser_display.write(text.encode())
+	ser_display.write(b'\n')
 
 def mqtt_publish_left_minutes():
-    publish_message(f'{mqtt_next_ferry}/Landungsbrücken',get_minutes(6,1))
-    publish_message(f'{mqtt_next_ferry}/Theater_im_Hafen',get_minutes(6,14))
-    publish_message(f'{mqtt_next_ferry}/Argentinienbrücke',get_minutes(6,15))
-    publish_message(f'{mqtt_next_ferry}/Ernst_August_Schleuse',get_minutes(6,16))
+	publish_message(f'{mqtt_next_ferry}/Landungsbrücken',get_minutes(6,1))
+	publish_message(f'{mqtt_next_ferry}/Theater_im_Hafen',get_minutes(6,14))
+	publish_message(f'{mqtt_next_ferry}/Argentinienbrücke',get_minutes(6,15))
+	publish_message(f'{mqtt_next_ferry}/Ernst_August_Schleuse',get_minutes(6,16))
 
 def main():
 	# main code
@@ -211,10 +211,10 @@ def main():
 
 		publish_message(mqtt_availability_73, ferry_availability)
 
-        if ser_rfid.in_waiting > 0:
-            rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
-            print("RFID-Daten empfangen:", rfid_data)
-            # Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
+		if ser_rfid.in_waiting > 0:
+			rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
+			print("RFID-Daten empfangen:", rfid_data)
+			# Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
 
 		if ferry_availability:
 			time.sleep(0.25)
