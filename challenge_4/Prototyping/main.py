@@ -123,14 +123,7 @@ def get_minutes(ferryLine_ID, dock_ID):
 
     # SQL-Abfrage mit Platzhaltern ausführen
     cursor.execute(
-        """
-        SELECT DepartureTime
-        FROM Schedule
-        WHERE FerryLine_ID = %s
-        AND Dock_ID = %s
-        ORDER BY DepartureTime
-        """,
-        (ferryLine_ID, dock_ID)
+        F"SELECT DepartureTime FROM Schedule WHERE FerryLine_ID = {ferryLine_ID} AND Dock_ID = {dock_ID} ORDER BY DepartureTime"
     )
 
     # Ergebnisse abrufen
