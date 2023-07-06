@@ -213,15 +213,15 @@ def main():
 		if ser_rfid.in_waiting > 0:
 			rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
 			if rfid_data == 'c394b30b':
-			    captain_availability = not captain_availability
+				captain_availability = not captain_availability
 			# Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
 
 		if captain_availability:
-		    ferry_availability = True
-        else:
-            ferry_availability = False
+			ferry_availability = True
+		else:
+			ferry_availability = False
 
-        publish_message(mqtt_availability_73, ferry_availability)
+		publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
 			time.sleep(0.25)
