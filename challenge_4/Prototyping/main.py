@@ -181,7 +181,7 @@ def mqtt_publish_left_minutes():
     publish_message(f'{mqtt_next_ferry}/Landungsbrücken',get_minutes(6,1))
     publish_message(f'{mqtt_next_ferry}/Theater_im_Hafen',get_minutes(6,14))
     publish_message(f'{mqtt_next_ferry}/Argentinienbrücke',get_minutes(6,15))
-    publish_message(f'{mqtt_next_ferry}/Ernst-August-Schleuse',get_minutes(6,16))
+    publish_message(f'{mqtt_next_ferry}/Ernst_August_Schleuse',get_minutes(6,16))
 
 def main():
 	# main code
