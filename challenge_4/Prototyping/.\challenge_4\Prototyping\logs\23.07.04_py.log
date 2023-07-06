@@ -1,0 +1,249 @@
+______________________
+ERROR 23.07.04 00:45:07 
+An unexpected error occurred: could not convert string to float: 'sserstand niedrig'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 163, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 133, in main
+    water_data = (int(water_ID), str(time_now), float(water))
+ValueError: could not convert string to float: 'sserstand niedrig'
+______________________
+ERROR 23.07.04 00:46:56 
+An unexpected error occurred: could not convert string to float: 'iedrig'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 163, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 133, in main
+    water_data = (int(water_ID), str(time_now), float(water))
+ValueError: could not convert string to float: 'iedrig'
+______________________
+ERROR 23.07.04 00:52:11 
+PostgreSQL database error: invalid input syntax for type date: "1688424730.4657528"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '168842473...
+                                                             ^
+
+______________________
+INFO 23.07.04 01:06:55 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:10:09 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:12:58 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:13:31 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:16:14 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:17:58 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:22:53 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:23:05 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:32:01 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:37:43 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:39:13 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:40:02 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:40:16 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:41:44 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:42:49 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:44:33 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:49:28 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:50:42 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:52:56 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:54:13 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:55:50 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 01:58:01 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.04 02:08:51 
+PostgreSQL database error: syntax error at or near ":"
+LINE 1: ...DepartureTime) FROM Schedule WHERE DepartureTime >= 02:08:51
+                                                                 ^
+
+______________________
+ERROR 23.07.04 02:10:40 
+An unexpected error occurred: unsupported operand type(s) for +: 'NoneType' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 202, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 183, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+______________________
+ERROR 23.07.04 02:15:42 
+An unexpected error occurred: unsupported operand type(s) for +: 'datetime.time' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 203, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 184, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'datetime.time' and 'str'
+______________________
+ERROR 23.07.04 02:19:50 
+PostgreSQL database error: syntax error at or near ":"
+LINE 1: ...rtureTime) FROM Schedule WHERE DepartureTime >= 02:19:50.715...
+                                                             ^
+
+______________________
+ERROR 23.07.04 02:21:14 
+An unexpected error occurred: unsupported operand type(s) for +: 'datetime.time' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 203, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 184, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'datetime.time' and 'str'
+______________________
+ERROR 23.07.04 02:26:44 
+PostgreSQL database error: column "ferryline" does not exist
+LINE 4:         WHERE FerryLine = 73
+                      ^
+HINT:  Perhaps you meant to reference the column "schedule.ferryline_id".
+
+______________________
+ERROR 23.07.04 02:28:29 
+An unexpected error occurred: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 220, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 184, in main
+    minutes = get_minutes()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 146, in get_minutes
+    return result[0]
+TypeError: 'NoneType' object is not subscriptable
+______________________
+ERROR 23.07.04 02:30:22 
+An unexpected error occurred: unsupported operand type(s) for +: 'datetime.time' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 220, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 201, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'datetime.time' and 'str'
+______________________
+ERROR 23.07.04 02:31:46 
+An unexpected error occurred: unsupported operand type(s) for +: 'datetime.time' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 220, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 201, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'datetime.time' and 'str'
+______________________
+ERROR 23.07.04 02:33:19 
+An unexpected error occurred: unsupported operand type(s) for +: 'datetime.time' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 221, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 202, in main
+    write_text(minutes + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'datetime.time' and 'str'
+______________________
+INFO 23.07.04 02:37:52 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.04 02:38:23 
+PostgreSQL database error: column "ferryline" does not exist
+LINE 4:         WHERE FerryLine = 73
+                      ^
+HINT:  Perhaps you meant to reference the column "schedule.ferryline_id".
+
+______________________
+INFO 23.07.04 02:39:21 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 02:42:00 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.04 02:44:00 
+An unexpected error occurred: unsupported operand type(s) for -: 'datetime.time' and 'datetime.time'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 229, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 193, in main
+    get_minutes()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 153, in get_minutes
+    minutes_left = next_departure_time-current_time
+TypeError: unsupported operand type(s) for -: 'datetime.time' and 'datetime.time'
+______________________
+INFO 23.07.04 02:47:43 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.04 02:49:14 
+An unexpected error occurred: name 'minutes' is not defined
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 237, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 218, in main
+    write_text(minutes + " Minuten.")
+NameError: name 'minutes' is not defined
+______________________
+ERROR 23.07.04 02:49:51 
+An unexpected error occurred: unsupported operand type(s) for +: 'float' and 'str'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 237, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 218, in main
+    write_text(minutes_left + " Minuten.")
+TypeError: unsupported operand type(s) for +: 'float' and 'str'
+______________________
+INFO 23.07.04 02:50:46 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.04 02:52:14 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.04 02:45:06 
+PostgreSQL database error: could not connect to server: Connection refused
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+______________________
+ERROR 23.07.04 02:45:22 
+PostgreSQL database error: could not connect to server: Connection refused
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+______________________
+INFO 23.07.04 02:52:13 
+KeyboardInterrupt: Script interrupted by user

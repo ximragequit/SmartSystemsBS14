@@ -1,0 +1,11 @@
+______________________
+ERROR 23.07.06 12:11:46 
+An unexpected error occurred: can only concatenate str (not "float") to str
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 248, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 212, in main
+    mqtt_publish_left_minutes()
+  File "/Workshop/challenge_4/Prototyping/main_test.py", line 182, in mqtt_publish_left_minutes
+    publish_message(mqtt_next_ferry+"/Landungsbrücken","Landungsbrücken:"+get_minutes(6,1))
+TypeError: can only concatenate str (not "float") to str
