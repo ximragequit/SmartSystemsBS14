@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 
 logging.basicConfig(
 	format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
-	filename = F'.\challenge_4\Prototyping\logs\{datetime.today().strftime("%y.%m.%d")}_py.log', 
+	filename = 'py.log',
 	encoding = 'utf-8', 
 	level = logging.DEBUG,
 	datefmt='%y.%m.%d %H:%M:%S'
@@ -15,7 +15,6 @@ logging.basicConfig(
 
 ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
 ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
-ser_rfid = serial.Serial('/dev/ttyACM2', 9600)  # Port und Baudrate anpassen
 # useless comment
 
 mqtt_broker = "localhost"
@@ -118,71 +117,71 @@ def db_insert_data(table, data):
 
 	db.close()
 
-def get_minutes(ferryLine_ID,dock_ID):
-	db = get_db()
-	cursor = db.cursor()
+def get_minutes(ferryLine_ID, dock_ID):
+    db = get_db()
+    cursor = db.cursor()
 
-	# SQL-Abfrage ausführen
-	cursor.execute(
-		"""
-		SELECT DepartureTime
-		FROM Schedule
-		WHERE FerryLine_ID = {ferryLine_ID}
-		AND Dock_ID = {dock_ID}
-		ORDER BY DepartureTime
-		"""
-	)
+    # SQL-Abfrage mit Platzhaltern ausführen
+    cursor.execute(
+        """
+        SELECT DepartureTime
+        FROM Schedule
+        WHERE FerryLine_ID = %s
+        AND Dock_ID = %s
+        ORDER BY DepartureTime
+        """,
+        (ferryLine_ID, dock_ID)
+    )
 
-	# Ergebnisse abrufen
-	results = cursor.fetchall()
+    # Ergebnisse abrufen
+    results = cursor.fetchall()
 
-	# Liste der Abfahrtszeiten erstellen
-	departure_times = [row[0] for row in results]
+    # Liste der Abfahrtszeiten erstellen
+    departure_times = [row[0] for row in results]
 
-	current_time = datetime.now().time()
+    current_time = datetime.now().time()
 
-	# Nächstgrößere Abfahrtszeit finden
-	next_departure_time = None
-	for departure_time in departure_times:
-		if departure_time > current_time:
-			next_departure_time = departure_time
-			break
+    # Nächstgrößere Abfahrtszeit finden
+    next_departure_time = None
+    for departure_time in departure_times:
+        if departure_time > current_time:
+            next_departure_time = departure_time
+            break
 
-	cursor.close()
-	db.close()
-	# Berechnung der Differenz in Minuten
-	if next_departure_time is not None:
-		# Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
-		current_datetime = datetime.combine(datetime.now().date(), current_time)
-		next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
+    cursor.close()
+    db.close()
+    # Berechnung der Differenz in Minuten
+    if next_departure_time is not None:
+        # Aktuelles Datum und Uhrzeit mit der nächsten Abfahrtszeit kombinieren
+        current_datetime = datetime.combine(datetime.now().date(), current_time)
+        next_departure_datetime = datetime.combine(datetime.now().date(), next_departure_time)
 
-		# Differenz berechnen
-		time_difference = next_departure_datetime - current_datetime
+        # Differenz berechnen
+        time_difference = next_departure_datetime - current_datetime
 
-		# Differenz in Minuten extrahieren
-		time_difference_minutes = time_difference.total_seconds() // 60
-	return time_difference_minutes
+        # Differenz in Minuten extrahieren
+        time_difference_minutes = time_difference.total_seconds() // 60
+    return int(time_difference_minutes)
 
 def clear_display():
-	ser_display.write(b'C')
+    ser_display.write(b'C')
 
 def move_cursor(column, row):
-	ser_display.write(b'M')
-	ser_display.write(str(column).encode())
-	ser_display.write(b' ')
-	ser_display.write(str(row).encode())
+    ser_display.write(b'M')
+    ser_display.write(str(column).encode())
+    ser_display.write(b' ')
+    ser_display.write(str(row).encode())
 
 def write_text(text):
-	ser_display.write(b'W')
-	ser_display.write(text.encode())
-	ser_display.write(b'\n')
+    ser_display.write(b'W')
+    ser_display.write(text.encode())
+    ser_display.write(b'\n')
 
 def mqtt_publish_left_minutes():
-	publish_message(f'{mqtt_next_ferry}/Landungsbrücken','test')
-	publish_message(mqtt_next_ferry+"/Landungsbrücken","Landungsbrücken:"+get_minutes(6,1))
-	publish_message(mqtt_next_ferry+"/Theater_im_Hafen","Theater_im_Hafen:"+get_minutes(6,14))
-	publish_message(mqtt_next_ferry+"/Argentinienbrücke","Argentinienbrücke:"+get_minutes(6,15))
-	publish_message(mqtt_next_ferry+"/Ernst-August-Schleuse","Ernst-August-Schleuse:"+get_minutes(6,16))
+    publish_message(f'{mqtt_next_ferry}/Landungsbrücken',get_minutes(6,1))
+    publish_message(f'{mqtt_next_ferry}/Theater_im_Hafen',get_minutes(6,14))
+    publish_message(f'{mqtt_next_ferry}/Argentinienbrücke',get_minutes(6,15))
+    publish_message(f'{mqtt_next_ferry}/Ernst-August-Schleuse',get_minutes(6,16))
 
 def main():
 	# main code
@@ -206,13 +205,10 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		minutes_left = int(get_minutes(6,16))
+		minutes_left = get_minutes(6,16)
+		#minutes_left = 0
 
 		mqtt_publish_left_minutes()
-
-		if ser_rfid.in_waiting > 0:
-			rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
-			print("RFID-Daten empfangen:", rfid_data)
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
