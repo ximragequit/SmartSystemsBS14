@@ -177,10 +177,10 @@ def write_text(text):
     ser_display.write(b'\n')
 
 def mqtt_publish_left_minutes():
-    publish_message(mqtt_next_ferry+"/Landungsbrücken",get_minutes(6,1))
-    publish_message(mqtt_next_ferry+"/Theater im Hafen",get_minutes(6,14))
-    publish_message(mqtt_next_ferry+"/Argentinienbrücke",get_minutes(6,15))
-    publish_message(mqtt_next_ferry+"/Ernst-August-Schleuse",get_minutes(6,16))
+    publish_message(mqtt_next_ferry+"/Landungsbrücken","Landungsbrücken:"+get_minutes(6,1))
+    publish_message(mqtt_next_ferry+"/Theater im Hafen","Theater im Hafen:"+get_minutes(6,14))
+    publish_message(mqtt_next_ferry+"/Argentinienbrücke","Argentinienbrücke:"+get_minutes(6,15))
+    publish_message(mqtt_next_ferry+"/Ernst-August-Schleuse","Ernst-August-Schleuse:"+get_minutes(6,16))
 
 def main():
 	# main code
