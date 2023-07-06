@@ -161,7 +161,7 @@ def get_minutes(ferryLine_ID, dock_ID):
 
         # Differenz in Minuten extrahieren
         time_difference_minutes = time_difference.total_seconds() // 60
-    return time_difference_minutes
+    return int(time_difference_minutes)
 
 def clear_display():
     ser_display.write(b'C')
@@ -205,7 +205,7 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		minutes_left = int(get_minutes(6,16))
+		minutes_left = get_minutes(6,16)
 		#minutes_left = 0
 
 		mqtt_publish_left_minutes()
