@@ -15,6 +15,7 @@ logging.basicConfig(
 
 ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
 ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
+ser_rfid = serial.Serial('/dev/ttyACM2', 9600)  # Port und Baudrate anpassen
 # useless comment
 
 mqtt_broker = "localhost"
@@ -209,6 +210,11 @@ def main():
 			ferry_availability = False
 
 		publish_message(mqtt_availability_73, ferry_availability)
+
+        if ser_rfid.in_waiting > 0:
+            rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
+            print("RFID-Daten empfangen:", rfid_data)
+            # Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
 
 		if ferry_availability:
 			time.sleep(0.25)
