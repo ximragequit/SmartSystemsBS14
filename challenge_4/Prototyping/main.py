@@ -39,6 +39,7 @@ display_message = "HADAG raus!"
 actual_coordinates = "your mum"
 ferry_availability = True
 max_water_level = 275
+captain_availability = False
 
 # Callback function for the on_connect event
 def on_connect(client, userdata, flags, rc):
@@ -209,12 +210,18 @@ def main():
 		else:
 			ferry_availability = False
 
-		publish_message(mqtt_availability_73, ferry_availability)
-
 		if ser_rfid.in_waiting > 0:
 			rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
-			print("RFID-Daten empfangen:", rfid_data)
+			if rfid_data = 'c394b30b':
+			    captain_availability = not captain_availability
 			# Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
+
+		if captain_availability:
+		    ferry_availability = True
+        else:
+            ferry_availability = False
+
+        publish_message(mqtt_availability_73, ferry_availability)
 
 		if ferry_availability:
 			time.sleep(0.25)
