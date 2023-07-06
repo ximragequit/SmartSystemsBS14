@@ -15,6 +15,7 @@ logging.basicConfig(
 
 ser_display = serial.Serial('/dev/ttyACM0', 9600)  # Port und Baudrate anpassen
 ser_water = serial.Serial('/dev/ttyACM1', 9600)  # Port und Baudrate anpassen
+ser_rfid = serial.Serial('/dev/ttyACM2', 9600)  # Port und Baudrate anpassen
 # useless comment
 
 mqtt_broker = "localhost"
@@ -207,6 +208,10 @@ def main():
 		minutes_left = int(get_minutes(6,16))
 
 		mqtt_publish_left_minutes()
+
+        if ser_rfid.in_waiting > 0:
+            rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
+            print("RFID-Daten empfangen:", rfid_data)
 
 		if int(water) < max_water_level: #ferry is available
 			ferry_availability = True
