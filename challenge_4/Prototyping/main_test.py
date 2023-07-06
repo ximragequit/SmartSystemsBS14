@@ -117,19 +117,20 @@ def db_insert_data(table, data):
 
 	db.close()
 
-def get_minutes(ferryLine_ID,dock_ID):
+def get_minutes(ferryLine_ID, dock_ID):
     db = get_db()
     cursor = db.cursor()
 
-    # SQL-Abfrage ausführen
+    # SQL-Abfrage mit Platzhaltern ausführen
     cursor.execute(
         """
         SELECT DepartureTime
         FROM Schedule
-        WHERE FerryLine_ID = {ferryLine_ID}
-        AND Dock_ID = {dock_ID}
+        WHERE FerryLine_ID = %s
+        AND Dock_ID = %s
         ORDER BY DepartureTime
-        """
+        """,
+        (ferryLine_ID, dock_ID)
     )
 
     # Ergebnisse abrufen
