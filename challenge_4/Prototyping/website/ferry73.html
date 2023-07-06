@@ -7,8 +7,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/2.18.8/mqtt.min.js"></script>
 
-
-    <link rel="icon" type="image/png" href="./static/image/favicon.ico"/>
+    <link rel="icon" type="image/png" href="./static/image/favicon.ico" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
@@ -31,37 +30,101 @@
       <h1 id="message">
         <script>
           // MQTT-Verbindung herstellen
-          var client = mqtt.connect("mqtt://192.168.5.59:9001", {
+          var client = mqtt.connect("mqtt://192.168.188.94:9001", {
             clientId: "clientId",
             username: "admin",
             password: "testing1234",
           });
 
+          // Array zum Speichern der Nachrichtenwerte
+          var topicValues = {};
+
           // Callback-Funktion für den Verbindungsaufbau
           client.on("connect", function () {
             console.log("Verbunden mit dem MQTT-Broker");
 
-            // Thema abonnieren
-            client.subscribe("topic/availability/73");
+            // Themen abonnieren
+            client.subscribe([
+              "topic/availability/73",
+              "topic/next_ferry/73/Landungsbrücken",
+              "topic/next_ferry/73/Theater_im_Hafen",
+              "topic/next_ferry/73/Argentinienbrücke",
+              "topic/next_ferry/73/Ernst_August_Schleuse",
+            ]);
           });
 
           // Callback-Funktion für den Empfang von Nachrichten
           client.on("message", function (topic, message) {
-            console.log("Nachricht empfangen:", message.toString());
+            console.log(topic, "Nachricht empfangen:", message.toString());
+
+            // Nachrichtenwert speichern
+            topicValues[topic] = message.toString();
 
             // Hier kannst du den Inhalt der Nachricht verarbeiten und entsprechend die Website aktualisieren
-            var availability = message.toString();
+            var availability = topicValues["topic/availability/73"];
             var messageElement = document.getElementById("message");
             if (availability === "True") {
               messageElement.innerHTML = "Ja! Die Fähre 73 fährt derzeit";
             } else {
               messageElement.innerHTML = "Die Fähre 73 fährt derzeit nicht";
             }
-          });
 
-          // Callback-Funktion für den Verbindungsverlust
-          client.on("offline", function () {
-            console.log("Verbindung zum MQTT-Broker verloren");
+            // Weitere Verarbeitung der Nachrichtenwerte hier...
+            // Beispiel: Du kannst die Werte in separaten HTML-Elementen anzeigen
+            var landungsbrueckenValue =
+              topicValues["topic/next_ferry/73/Landungsbrücken"];
+            var theaterImHafenValue =
+              topicValues["topic/next_ferry/73/Theater_im_Hafen"];
+            var argentinienbrueckeValue =
+              topicValues["topic/next_ferry/73/Argentinienbrücke"];
+            var ernstaugustschleuseValue =
+              topicValues["topic/next_ferry/73/Ernst_August_Schleuse"];
+
+              var landungsbrueckenElement =
+              document.getElementById("1-landungsbruecken");
+            landungsbrueckenElement.innerHTML =
+              "Landungsbrücken: ca. " + landungsbrueckenValue + " min";
+
+            var theaterImHafenElement =
+              document.getElementById("1-theaterImHafen");
+            theaterImHafenElement.innerHTML =
+              "Theater im Hafen: ca. " + theaterImHafenValue + " min";
+
+            var argentinienbrueckeElement = document.getElementById(
+              "1-argentinienbruecke"
+            );
+            argentinienbrueckeElement.innerHTML =
+              "Argentinienbrücke: ca. " + argentinienbrueckeValue + " min";
+
+            var ernstaugustschleuseElement = document.getElementById(
+              "1-ernstaugustschleuse"
+            );
+            ernstaugustschleuseElement.innerHTML =
+              "Ernst-August-Schleuse: ca. " + ernstaugustschleuseValue + " min";
+
+
+              // back
+              var landungsbrueckenElement =
+              document.getElementById("2-landungsbruecken");
+            landungsbrueckenElement.innerHTML =
+              "Landungsbrücken: " + "unbekannt";
+
+            var theaterImHafenElement =
+              document.getElementById("2-theaterImHafen");
+            theaterImHafenElement.innerHTML =
+              "Theater im Hafen: " + "unbekannt";
+
+            var argentinienbrueckeElement = document.getElementById(
+              "2-argentinienbruecke"
+            );
+            argentinienbrueckeElement.innerHTML =
+              "Argentinienbrücke: " + "unbekannt";
+
+            var ernstaugustschleuseElement = document.getElementById(
+              "2-ernstaugustschleuse"
+            );
+            ernstaugustschleuseElement.innerHTML =
+              "Ernst-August-Schleuse: " + "unbekannt";
           });
         </script>
       </h1>
@@ -118,17 +181,23 @@
             class="col-md-6 col-sm-12 row justify-content-center col text-center mt-4"
           >
             <h1>Die nächsten Fähren</h1>
-            <p class="text-justify">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam
-              voluptua. At vero eos et accusam et justo duo dolores gubergren,
-              no sea takimata sanctus est Lorem ipsum dolor sit amet.
-            </p>
+            <div class="d-flex flex-column">
+              <div class="text-center">
+                <p>Landungsbrücken bis Ernst-August-Schleuse</p>
+                <span id="1-landungsbruecken"></span><br />
+                <span id="1-theaterImHafen"></span><br />
+                <span id="1-argentinienbruecke"></span><br />
+                <span id="1-ernstaugustschleuse"></span>
+              </div>
+              <div class="text-center">
+                <p><br>Ernst-August-Schleuse bis Landungsbrücken</p>
+                <span id="2-ernstaugustschleuse"></span><br />
+                <span id="2-argentinienbruecke"></span><br />
+                <span id="2-theaterImHafen"></span><br />
+                <span id="2-landungsbruecken"></span>
+              </div>
+            </div>
+            
           </div>
           <div style="width: 20px"></div>
           <div
@@ -140,7 +209,6 @@
             <script src="static/map.js"></script>
           </div>
         </div>
-
 
         <script>
           $(window).on("load resize", function () {
@@ -190,8 +258,12 @@
                     Landungsbrücken (Brücke 1) &rarr; Ernst-August-Schleuse
                   </p>
                 </div>
-                <div class="custom-scrollbar table-container table-responsive table-scrollable">
-                  <table class="table table-spacing table-spacing-test table-full-width">
+                <div
+                  class="custom-scrollbar table-container table-responsive table-scrollable"
+                >
+                  <table
+                    class="table table-spacing table-spacing-test table-full-width"
+                  >
                     <tbody>
                       <tr>
                         <th>Landungsbrücken (Brücke 1)</th>
@@ -373,8 +445,12 @@
                     Ernst-August-Schleuse &rarr; Landungsbrücken (Brücke 1)
                   </p>
                 </div>
-                <div class="custom-scrollbar table-container table-responsive table-scrollable">
-                  <table class="table table-spacing table-spacing-test table-full-width">
+                <div
+                  class="custom-scrollbar table-container table-responsive table-scrollable"
+                >
+                  <table
+                    class="table table-spacing table-spacing-test table-full-width"
+                  >
                     <tbody>
                       <tr>
                         <th>Ernst-August-Schleuse</th>
@@ -544,7 +620,7 @@
         <div class="row">
           <div class="col-md-4">
             <h3>ferryALeRT</h3>
-            <img src="static/image/logo.png" alt="Logo" width="200"/>
+            <img src="static/image/logo.png" alt="Logo" width="200" />
             <p>Putting the ‘Smart’ in Smart Systems</p>
           </div>
           <div class="col-md-4">
