@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 
 logging.basicConfig(
 	format = '______________________\n%(levelname)-2s %(asctime)s \n%(message)s',
-	filename = F'.{datetime.today().strftime("%y.%m.%d")}_py.log',
+	filename = 'py.log',
 	encoding = 'utf-8', 
 	level = logging.DEBUG,
 	datefmt='%y.%m.%d %H:%M:%S'
@@ -206,8 +206,8 @@ def main():
 		#message_water = str(water)
 		#publish_message(mqtt_water, message_water)
 
-		#minutes_left = int(get_minutes(6,16))
-		minutes_left = 0
+		minutes_left = int(get_minutes(6,16))
+		#minutes_left = 0
 
 		mqtt_publish_left_minutes()
 
