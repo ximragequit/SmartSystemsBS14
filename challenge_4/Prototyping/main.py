@@ -204,10 +204,6 @@ def main():
 
 		mqtt_publish_left_minutes()
 
-		if int(water) < max_water_level: #ferry is available
-			ferry_availability = True
-		else:
-			ferry_availability = False
 
 		if ser_rfid.in_waiting > 0:
 			rfid_data = ser_rfid.readline().decode().strip()  # Daten vom Arduino lesen
@@ -215,9 +211,10 @@ def main():
 				captain_availability = not captain_availability
 			# Führe weitere Aktionen basierend auf den empfangenen RFID-Daten aus
 
-		if captain_availability:
+		if int(water) < max_water_level and captain_availability: #ferry is available
 			ferry_availability = True
 		else:
+			logging.info(f'water: {water}; \n captain: {captain_availability}')
 			ferry_availability = False
 
 		publish_message(mqtt_availability_73, ferry_availability)
