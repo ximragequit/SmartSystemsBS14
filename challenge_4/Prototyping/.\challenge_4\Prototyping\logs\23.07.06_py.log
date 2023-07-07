@@ -1,0 +1,18 @@
+______________________
+ERROR 23.07.06 12:49:09 
+PostgreSQL database error: syntax error at or near "{"
+LINE 4:   WHERE FerryLine_ID = {ferryLine_ID}
+                               ^
+
+______________________
+ERROR 23.07.06 12:52:52 
+PostgreSQL database error: syntax error at or near "{"
+LINE 4:   WHERE FerryLine_ID = {ferryLine_ID}
+                               ^
+
+______________________
+ERROR 23.07.06 12:54:31 
+PostgreSQL database error: syntax error at or near "{"
+LINE 4:   WHERE FerryLine_ID = {ferryLine_ID}
+                               ^
+

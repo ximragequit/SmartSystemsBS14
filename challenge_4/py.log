@@ -1,0 +1,38 @@
+______________________
+INFO 23.07.07 09:48:21 
+getting id and waterlevel
+______________________
+INFO 23.07.07 09:49:06 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.07 09:49:35 
+getting id and waterlevel
+______________________
+ERROR 23.07.07 09:49:41 
+Serial communication error: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+______________________
+INFO 23.07.07 09:49:58 
+getting id and waterlevel
+______________________
+INFO 23.07.07 09:49:59 
+water level: 0
+______________________
+ERROR 23.07.07 09:50:00 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:49:58"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+______________________
+INFO 23.07.07 09:50:35 
+getting id and waterlevel
+______________________
+INFO 23.07.07 09:50:36 
+water level: 0
+______________________
+ERROR 23.07.07 09:50:38 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:50:35"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+

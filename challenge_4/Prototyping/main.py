@@ -29,11 +29,21 @@ mqtt_availability = "topic/availability"
 mqtt_availability_73 = "topic/availability/73"
 mqtt_next_ferry = "topic/next_ferry/73"
 
-db_host = 'localhost'
+
 db_port = '5432'
-db_database = 'postgres'
+
+# VM:
+# db_host = '10.8.0.1'
+# db_database = 'ferry'
+# db_usr = 'admin_hs'
+# db_pw = 'Testing1234'
+
+# Docker:
+db_host = 'localhost'
 db_usr = 'postgres'
+db_database = 'postgres'
 db_pw = 'testing1234'
+
 
 display_message = "HADAG raus!"
 actual_coordinates = "your mum"
