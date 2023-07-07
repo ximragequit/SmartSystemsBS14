@@ -1,0 +1,64 @@
+______________________
+INFO 23.07.07 09:48:24 
+getting id and waterlevel
+______________________
+INFO 23.07.07 09:48:30 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.07 09:50:01 
+getting id and waterlevel
+______________________
+INFO 23.07.07 09:50:01 
+water level: 0
+______________________
+ERROR 23.07.07 09:50:01 
+An unexpected error occurred: module 'logging' has no attribute 'infor'
+Traceback (most recent call last):
+  File "/Workshop/challenge_4/Prototyping/main.py", line 265, in <module>
+    main()
+  File "/Workshop/challenge_4/Prototyping/main.py", line 210, in main
+    logging.infor('after insert')
+AttributeError: module 'logging' has no attribute 'infor'
+______________________
+INFO 23.07.07 09:50:50 
+KeyboardInterrupt: Script interrupted by user
+______________________
+ERROR 23.07.07 09:51:17 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:51:15"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+______________________
+ERROR 23.07.07 09:52:44 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:52:41"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+______________________
+ERROR 23.07.07 09:52:50 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:52:48"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+______________________
+ERROR 23.07.07 09:53:15 
+PostgreSQL database error: date/time field value out of range: "23.07.07;09:53:13"
+LINE 1: ...(waterlevel_id, timestamp, waterlevel) VALUES (1, '23.07.07;...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+______________________
+INFO 23.07.07 09:54:27 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.07 09:55:02 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.07 09:56:19 
+KeyboardInterrupt: Script interrupted by user
+______________________
+INFO 23.07.07 09:57:41 
+KeyboardInterrupt: Script interrupted by user
