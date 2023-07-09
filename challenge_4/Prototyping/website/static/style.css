@@ -250,7 +250,7 @@ i {
 
 .table-scrollable::-webkit-scrollbar-thumb {
   background-color: #888;
-  border-radius: 50%;
+  border-radius: 25px;
 }
 
 .table-scrollable::-webkit-scrollbar-thumb:hover {
